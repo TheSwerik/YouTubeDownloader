@@ -16,6 +16,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(
+    policyBuilder =>
+    {
+        policyBuilder.WithOrigins("https://localhost:7258")
+                     .AllowAnyMethod()
+                     .AllowAnyHeader();
+    }
+);
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
