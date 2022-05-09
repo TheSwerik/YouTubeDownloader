@@ -1,4 +1,4 @@
-namespace YouTubeDownloader.API;
+namespace Backend;
 
 public class WeatherForecast
 {

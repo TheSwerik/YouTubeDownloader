@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "YouTubeDownloader.API": {
+    "Backend": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
