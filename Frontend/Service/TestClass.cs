@@ -10,7 +10,7 @@ public class TestClass : Service
     {
         Console.WriteLine("hheheheheh");
         Console.WriteLine(Http.BaseAddress);
-        var result = await Http.GetAsync("/WeatherForecast");
+        var result = await Http.GetAsync("/WeatherForecast/test");
         Console.WriteLine(result);
         Console.WriteLine(result.Content);
         return await result.Content.ReadAsStringAsync();
