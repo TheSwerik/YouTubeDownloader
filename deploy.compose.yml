@@ -1,0 +1,60 @@
+version: "3.9"
+services:
+  backend:
+    container_name: backend
+    image: youtubedownloader-backend
+    networks:
+      - default
+#    environment:
+#      - >
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 5m
+      resources:
+        limits:
+          cpus: '1'
+          memory: '2000M'
+        reservations:
+          cpus: '0.1'
+          memory: '400M'
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10M'
+        max-file: '10'
+  frontend:
+    container_name: frontend
+    image: youtubedownloader-frontend
+    networks:
+      - default
+    ports:
+      - "8080:80"
+#      - "443:443"
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 5m
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '200M'
+        reservations:
+          cpus: '0.1'
+          memory: '50M'
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '500k'
+        max-file: '10'
+networks:
+  default:
+    driver: bridge
