@@ -16,8 +16,6 @@ public class DownloadController : ControllerBase
         _downloadService = downloadService;
     }
 
-    // [HttpGet("song")] public byte[] Get(string url) { return _downloadService.DownloadYouTubeAudio(url); }
-
     [HttpGet("song")]
     public IActionResult Get(string url)
     {
