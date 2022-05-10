@@ -1,15 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
-
-namespace Frontend.Service;
+﻿namespace Frontend.Service;
 
 public abstract class Service
 {
     protected readonly HttpClient Http;
-    protected readonly NavigationManager NavigationManager;
 
-    protected Service(HttpClient http, NavigationManager navigationManager)
-    {
-        Http = http;
-        NavigationManager = navigationManager;
-    }
+    protected Service(HttpClient http) { Http = http; }
 }
