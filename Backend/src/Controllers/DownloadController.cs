@@ -22,6 +22,8 @@ public class DownloadController : ControllerBase
     public IActionResult Get(string url)
     {
         var path = _downloadService.DownloadYouTubeAudio(url);
-        return File(System.IO.File.OpenRead(path), "audio/mpeg", Path.GetFileName(path));
+        var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None, 4096,
+                                        FileOptions.DeleteOnClose);
+        return File(fileStream, "audio/mpeg", Path.GetFileName(path));
     }
 }
