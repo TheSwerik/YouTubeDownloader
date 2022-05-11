@@ -18,8 +18,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors(
     policyBuilder =>
     {
-        // policyBuilder.WithOrigins("https://localhost:7258")
-        // policyBuilder.WithOrigins("http://localhost:8080")
+        // policyBuilder.WithOrigins("http://localhost:4200","http://frontend")
         policyBuilder.AllowAnyOrigin()
                      .AllowAnyMethod()
                      .AllowAnyHeader()
