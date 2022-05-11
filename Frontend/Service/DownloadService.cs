@@ -11,7 +11,7 @@ public class DownloadService : Service
 
     public async void DownloadSong(string url)
     {
-        var response = await Http.GetAsync($"/api/download/song?url={url}");
+        var response = await Http.GetAsync($"download/song?url={url}");
         response.EnsureSuccessStatusCode();
         var bytes = await response.Content.ReadAsByteArrayAsync();
         var fileStream = new MemoryStream(bytes);

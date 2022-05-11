@@ -8,8 +8,14 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services
-       .AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) })
+       .AddScoped(_ => new HttpClient
+                       {
+                           BaseAddress = new Uri(
+                               builder.HostEnvironment.IsEnvironment("Local")
+                                   ? "http://localhost:8080"
+                                   : builder.HostEnvironment.BaseAddress + "/api/"
+                           )
+                       })
        .AddScoped<DownloadService>();
-
 
 await builder.Build().RunAsync();
