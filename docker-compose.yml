@@ -5,8 +5,11 @@ services:
     image: youtubedownloader-backend
     networks:
       - default
-#    environment:
-#      - >
+    ports:
+      - "8080:80"
+    environment:
+      ffmpegPath: "/usr/bin/ffmpeg"
+      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: false
     deploy:
       mode: replicated
       replicas: 1
@@ -33,8 +36,8 @@ services:
     networks:
       - default
     ports:
-      - "8080:80"
-#      - "443:443"
+      - "4200:80"
+      - "4201:443"
     deploy:
       mode: replicated
       replicas: 1

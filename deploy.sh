@@ -4,13 +4,14 @@
 
 # Build Backend
 cd Backend || exit
-docker build -t youtubedownloader-backend . --progress plain
+docker build -t youtubedownloader-backend . --progress plain || exit
 cd ..
 
 # Build Frontend
 cd Frontend || exit
-docker build -t youtubedownloader-frontend . --progress plain
+docker build -t youtubedownloader-frontend . --progress plain || exit
 cd ..
 
 # Start Compose
-docker compose -f deploy.compose.yml up -d
+docker compose up -d
+#docker compose -f deploy.compose.yml up -d

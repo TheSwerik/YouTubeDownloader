@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Backend.Controllers;
 
 [ApiController]
-[Route("download")]
+[Route("api/download")]
 public class DownloadController : ControllerBase
 {
     private readonly DownloadService _downloadService;

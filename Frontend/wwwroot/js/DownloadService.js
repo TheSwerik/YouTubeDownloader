@@ -3,7 +3,10 @@ async function downloadFileFromStream(fileName, contentStreamReference) {
     const blob = new Blob([arrayBuffer]);
     const url = URL.createObjectURL(blob);
 
+    console.log(fileName)
+    console.log(url)
     triggerFileDownload(fileName, url);
+    console.log('downloaded')
 
     URL.revokeObjectURL(url);
 }

@@ -6,6 +6,13 @@ namespace Backend.Service;
 
 public class DownloadService
 {
+    public DownloadService(string? ffmpegPath)
+    {
+        _ffmpegPath = ffmpegPath ?? @"C:\Program Files\FFMPEG\bin\ffmpeg.exe";
+    }
+
+    private string _ffmpegPath { get; }
+
     public string DownloadYouTubeAudio(string url)
     {
         var youtube = YouTube.Default;
@@ -18,7 +25,7 @@ public class DownloadService
         var inputFile = new MediaFile { Filename = videoPath };
         var outputFile = new MediaFile { Filename = audioPath };
 
-        using var engine = new Engine(@"C:\Program Files\FFMPEG\bin\ffmpeg.exe");
+        using var engine = new Engine(_ffmpegPath);
         engine.GetMetadata(inputFile);
         engine.Convert(inputFile, outputFile);
 

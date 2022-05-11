@@ -11,7 +11,18 @@ public class DownloadService : Service
 
     public async void DownloadSong(string url)
     {
-        var response = await Http.GetAsync($"/download/song?url={url}");
+        // url = "pwTzHbIXSlI";
+        Console.WriteLine(Http.BaseAddress);
+        Console.WriteLine(Http.BaseAddress + $"api/download/song?url={url}");
+        Console.WriteLine(Http.DefaultRequestHeaders);
+        var response = await Http.GetAsync($"/api/download/song?url={url}");
+        // await Http.GetAsync($"api/download/song?url={url}");
+        // await Http.GetAsync($"http://localhost:4200/api/download/song?url={url}");
+        // await Http.GetAsync($"http://backend/api/download/song?url={url}");
+        // await Http.GetAsync($"http://backend:8080/api/download/song?url={url}");
+        Console.WriteLine(response.StatusCode);
+        Console.WriteLine(response.Headers);
+        Console.WriteLine(response.Content.Headers);
         response.EnsureSuccessStatusCode();
         var bytes = await response.Content.ReadAsByteArrayAsync();
         var fileStream = new MemoryStream(bytes);
