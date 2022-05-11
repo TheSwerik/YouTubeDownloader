@@ -40,8 +40,6 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
                         {
                             ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
                         });
-app.UsePathBase("/api");
-
 
 app.UseAuthorization();
 
