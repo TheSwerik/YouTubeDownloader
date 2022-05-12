@@ -19,6 +19,7 @@ public class DownloadController : ControllerBase
     [HttpGet("song")]
     public IActionResult Get(string url)
     {
+        _logger.LogInformation("{%s}", HttpContext.Request.Headers.Origin);
         var path = _downloadService.DownloadYouTubeAudio(url);
         var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None, 4096,
                                         FileOptions.DeleteOnClose);
