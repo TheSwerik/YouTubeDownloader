@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <InvariantGlobalization>false</InvariantGlobalization>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,9 +14,4 @@
         <PackageReference Include="TagLibSharp" Version="2.2.0"/>
         <PackageReference Include="VideoLibrary" Version="3.1.9"/>
     </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="out"/>
-    </ItemGroup>
-
 </Project>

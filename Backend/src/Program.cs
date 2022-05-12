@@ -2,18 +2,16 @@ using Backend.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<DownloadService>();
+var ffmpegPath = builder.Configuration["FFMPEG_PATH"];
+if (ffmpegPath == null) throw new Exception("FFMPEG_PATH is missing"); //TODO exceptions
+builder.Services.AddSingleton(_ => new DownloadService(ffmpegPath));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -23,14 +21,13 @@ if (app.Environment.IsDevelopment())
 app.UseCors(
     policyBuilder =>
     {
-        policyBuilder.WithOrigins("https://localhost:7258")
+        // policyBuilder.WithOrigins("http://localhost:4200","http://frontend")
+        policyBuilder.AllowAnyOrigin()
                      .AllowAnyMethod()
                      .AllowAnyHeader()
                      .WithExposedHeaders("*");
     }
 );
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

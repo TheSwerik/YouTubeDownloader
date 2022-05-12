@@ -7,9 +7,15 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7023/") });
-
-builder.Services.AddScoped<DownloadService>();
+builder.Services
+       .AddScoped(_ => new HttpClient
+                       {
+                           BaseAddress = new Uri(
+                               builder.HostEnvironment.IsEnvironment("Local")
+                                   ? "http://localhost:8080"
+                                   : builder.HostEnvironment.BaseAddress + "/api/"
+                           )
+                       })
+       .AddScoped<DownloadService>();
 
 await builder.Build().RunAsync();
