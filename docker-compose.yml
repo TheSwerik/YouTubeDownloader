@@ -5,8 +5,6 @@ services:
     image: youtubedownloader-backend
     networks:
       - default
-    ports:
-      - "8080:80"
     environment:
       ffmpegPath: "/usr/bin/ffmpeg"
       DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: false
