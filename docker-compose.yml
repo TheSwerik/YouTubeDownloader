@@ -6,7 +6,7 @@ services:
     networks:
       - default
     environment:
-      ffmpegPath: "/usr/bin/ffmpeg"
+      FFMPEG_PATH: "/usr/bin/ffmpeg"
       DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: false
     deploy:
       mode: replicated

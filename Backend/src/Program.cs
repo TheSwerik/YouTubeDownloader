@@ -5,7 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped(provider => new DownloadService(builder.Configuration["ffmpegPath"]));
+
+var ffmpegPath = builder.Configuration["FFMPEG_PATH"];
+if (ffmpegPath == null) throw new Exception("FFMPEG_PATH is missing"); //TODO exceptions
+builder.Services.AddSingleton(_ => new DownloadService(ffmpegPath));
 
 var app = builder.Build();
 
