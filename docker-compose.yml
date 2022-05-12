@@ -33,11 +33,12 @@ services:
   frontend:
     container_name: frontend
     image: youtubedownloader-frontend
+    depends_on: 
+      - backend
     networks:
       - default
     ports:
       - "4200:80"
-      - "4201:443"
     deploy:
       mode: replicated
       replicas: 1
