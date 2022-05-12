@@ -2,6 +2,9 @@ using Backend.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -21,8 +24,10 @@ if (app.Environment.IsDevelopment())
 app.UseCors(
     policyBuilder =>
     {
-        // policyBuilder.WithOrigins("http://localhost:4200","http://frontend")
-        policyBuilder.AllowAnyOrigin()
+        // policyBuilder.WithOrigins("http://localhost:4200")
+        policyBuilder.WithOrigins("http://a:1")
+                     // policyBuilder.WithOrigins("http://localhost:4200","http://frontend:4200")
+                     // policyBuilder.AllowAnyOrigin()
                      .AllowAnyMethod()
                      .AllowAnyHeader()
                      .WithExposedHeaders("*");
