@@ -1,4 +1,5 @@
-﻿using Backend.Util;
+﻿using Backend.Service.Exception;
+using Backend.Util;
 using MediaToolkit;
 using MediaToolkit.Model;
 using VideoLibrary;
@@ -24,14 +25,14 @@ public class DownloadService
     private YouTubeVideo GetVideo(string url)
     {
         if (url.IsVideoId()) url = $"youtu.be/{url}";
-        if (url.IsInvalidYouTubeUrl()) throw new Exception($"{url} is not a valid url."); //TODO exceptions
+        if (url.IsInvalidYouTubeUrl()) throw new InvalidUrlException(url);
         try
         {
             return _youtube.GetVideo(url);
         }
         catch (UnavailableStreamException e)
         {
-            throw new Exception($"{url} does not contain a valid Video-Id."); //TODO exceptions
+            throw new YouTubeVideoNotFoundException(url);
         }
     }
 
