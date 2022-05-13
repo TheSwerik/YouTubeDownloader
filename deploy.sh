@@ -18,3 +18,6 @@ cd ..
 echo 'Starting...'
 docker compose up -d
 #docker compose -f deploy.compose.yml up -d
+
+echo 'Cleanup...'
+docker image prune -af
