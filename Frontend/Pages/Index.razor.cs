@@ -1,6 +1,5 @@
 ﻿using Frontend.Service;
 using Microsoft.AspNetCore.Components;
-using ExceptionResource = Frontend.Resources.Exception;
 
 namespace Frontend.Pages;
 
