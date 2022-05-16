@@ -28,7 +28,7 @@ public class DownloadController : ControllerBase
     [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [Produces("audio/mpeg", "text/plain")]
+    [Produces("audio/mpeg", "application/json")]
     public IActionResult Get(string url)
     {
         var path = _downloadService.DownloadYouTubeAudio(url);

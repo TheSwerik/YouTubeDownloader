@@ -17,4 +17,8 @@
         <Folder Include="wwwroot\css\bootstrap"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Shared\Shared.csproj"/>
+    </ItemGroup>
+
 </Project>

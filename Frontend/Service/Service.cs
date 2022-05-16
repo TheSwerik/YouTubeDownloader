@@ -4,7 +4,7 @@ namespace Frontend.Service;
 
 public abstract class Service
 {
-    public Service(HttpClient http, IToastService toastService)
+    protected Service(HttpClient http, IToastService toastService)
     {
         Http = http;
         ToastService = toastService;

@@ -1,13 +1,15 @@
-﻿namespace Backend.Service.Exception.Util;
+﻿using Shared.Exception;
+
+namespace Backend.Service.Exception.Util;
 
 public abstract class YouTubeDownloaderException : System.Exception
 {
-    protected YouTubeDownloaderException(int statusCode, object? value = null)
+    protected YouTubeDownloaderException(int statusCode, YouTubeDownloaderExceptionBody? body)
     {
-        (StatusCode, Value) = (statusCode, value);
+        (StatusCode, Body) = (statusCode, body);
     }
 
     public int StatusCode { get; }
 
-    public object? Value { get; }
+    public YouTubeDownloaderExceptionBody? Body { get; }
 }
