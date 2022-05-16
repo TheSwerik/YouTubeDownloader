@@ -6,7 +6,7 @@ namespace Backend.Service.Exception;
 public class InvalidUrlException : BadRequestException
 {
     public InvalidUrlException(string url) : base(
-        new YouTubeDownloaderExceptionBody(ExceptionType.INVALID_URL, $"{url} is not a valid YouTube-URL")
+        new YouTubeDownloaderExceptionBody(ExceptionType.INVALID_URL, $"{url} is not a valid YouTube-URL", url)
     )
     {
     }

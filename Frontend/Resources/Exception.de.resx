@@ -16,6 +16,9 @@
         </value>
     </resheader>
     <data name="DEFAULT" xml:space="preserve">
-        <value>dssdsdssd</value>
+        <value>Ein Fehler ist aufgetreten.</value>
+    </data>
+    <data name="INVALID_URL" xml:space="preserve">
+        <value>{0} ist keine valide YouTube-URL.</value>
     </data>
 </root>

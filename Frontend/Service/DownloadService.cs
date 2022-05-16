@@ -1,13 +1,16 @@
-﻿using System.Net.Http.Json;
-using Blazored.Toast.Services;
+﻿using Blazored.Toast.Services;
+using Frontend.Service.Util;
 using Microsoft.JSInterop;
-using Shared.Exception;
 
 namespace Frontend.Service;
 
 public class DownloadService : Service
 {
-    public DownloadService(HttpClient http, IToastService toastService, IJSRuntime js) : base(http, toastService)
+    public DownloadService(HttpClient http,
+                           IToastService toastService,
+                           IJSRuntime js,
+                           ExceptionLocalizationService exceptionLocalizationService)
+        : base(http, toastService, exceptionLocalizationService)
     {
         Js = js;
     }
@@ -20,9 +23,8 @@ public class DownloadService : Service
 
         if (!response.IsSuccessStatusCode)
         {
-            var exceptionBody = await response.Content.ReadFromJsonAsync<YouTubeDownloaderExceptionBody>() ??
-                                new YouTubeDownloaderExceptionBody(ExceptionType.DEFAULT, "test");
-            ToastService.ShowError(exceptionBody.Body, exceptionBody.Type.ToString());
+            var exceptionBody = await response.Content.GetExceptionBody();
+            ToastService.ShowError(ExceptionLocalizationService[exceptionBody.Type, exceptionBody.Body]);
             return;
         }
 

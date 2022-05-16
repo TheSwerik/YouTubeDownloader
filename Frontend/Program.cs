@@ -18,8 +18,8 @@ builder.Services
                                    : builder.HostEnvironment.BaseAddress + "/api/"
                            )
                        })
-       // .AddScoped<ExceptionLocalizationService>()
+       .AddScoped<ExceptionLocalizationService>()
        .AddScoped<DownloadService>()
        .AddBlazoredToast();
 
-await builder.Build().RunAsync();
+builder.Build().RunAsync();

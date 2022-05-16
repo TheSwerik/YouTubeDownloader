@@ -1,20 +1,14 @@
 ﻿using Microsoft.Extensions.Localization;
 using Shared.Exception;
-using Exception = Frontend.Resources.Exception;
+using ExceptionResource = Frontend.Resources.Exception;
 
 namespace Frontend.Service;
 
 public class ExceptionLocalizationService
 {
-    internal ExceptionLocalizationService(IStringLocalizer<Exception> localizer) { Localizer = localizer; }
-    private IStringLocalizer<Exception> Localizer { get; }
+    public ExceptionLocalizationService(IStringLocalizer<ExceptionResource> localizer) { Localizer = localizer; }
+    public string this[ExceptionType type] => Localizer[type.ToString()];
 
-    public string Get(ExceptionType type)
-    {
-        Console.WriteLine(ExceptionType.DEFAULT.ToString());
-        Console.WriteLine(Localizer[ExceptionType.DEFAULT.ToString()]);
-        Console.WriteLine(type.ToString());
-        Console.WriteLine(Localizer[type.ToString()]);
-        return Localizer[type.ToString()];
-    }
+    public string this[ExceptionType type, params object?[] parameters] => Localizer[type.ToString(), parameters];
+    private IStringLocalizer<ExceptionResource> Localizer { get; }
 }
