@@ -19,7 +19,7 @@ public abstract class Service
         {
             return await Http.GetAsync(url);
         }
-        catch (HttpRequestException e)
+        catch (HttpRequestException)
         {
             ToastService.ShowError("Verbindung zum Server konnte nicht aufgebaut werden.");
             throw;
