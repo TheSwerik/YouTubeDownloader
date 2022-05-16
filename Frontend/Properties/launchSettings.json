@@ -21,11 +21,12 @@
       "commandName": "Executable",
       "workingDirectory": "$(ProjectDir)",
       "executablePath": "dotnet.exe",
-      "commandLineArgs": "watch run",
+      "commandLineArgs": "watch run --non-interactive",
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:4200",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Local"
+        "ASPNETCORE_ENVIRONMENT": "Local",
+        "DOTNET_WATCH_SUPPRESS_EMOJIS": "true"
       }
     },
     "Frontend": {

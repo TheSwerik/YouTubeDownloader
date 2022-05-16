@@ -1,3 +1,4 @@
+using Blazored.Toast;
 using Frontend;
 using Frontend.Service;
 using Microsoft.AspNetCore.Components.Web;
@@ -16,6 +17,7 @@ builder.Services
                                    : builder.HostEnvironment.BaseAddress + "/api/"
                            )
                        })
-       .AddScoped<DownloadService>();
+       .AddScoped<DownloadService>()
+       .AddBlazoredToast();
 
 await builder.Build().RunAsync();
