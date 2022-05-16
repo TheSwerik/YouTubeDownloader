@@ -9,6 +9,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services
+       .AddLocalization()
        .AddScoped(_ => new HttpClient
                        {
                            BaseAddress = new Uri(
@@ -17,6 +18,7 @@ builder.Services
                                    : builder.HostEnvironment.BaseAddress + "/api/"
                            )
                        })
+       // .AddScoped<ExceptionLocalizationService>()
        .AddScoped<DownloadService>()
        .AddBlazoredToast();
 
