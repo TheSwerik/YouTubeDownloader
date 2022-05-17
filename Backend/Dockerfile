@@ -6,13 +6,14 @@ RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zli
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
+COPY --from=youtubedownloader-shared /app/publish ./packages
 COPY Backend.csproj .
-RUN dotnet restore Backend.csproj
+RUN dotnet restore
 COPY . .
-RUN dotnet build Backend.csproj -c Release -o /app/build
+RUN dotnet build -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish Backend.csproj -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
