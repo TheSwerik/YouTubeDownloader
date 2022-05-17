@@ -9,6 +9,6 @@ public class ExceptionLocalizationService
     public ExceptionLocalizationService(IStringLocalizer<ExceptionResource> localizer) { Localizer = localizer; }
     public string this[ExceptionType type] => Localizer[type.ToString()];
 
-    public string this[ExceptionType type, params object?[] parameters] => Localizer[type.ToString(), parameters];
+    public string this[ExceptionType type, params object[] parameters] => Localizer[type.ToString(), parameters];
     private IStringLocalizer<ExceptionResource> Localizer { get; }
 }
