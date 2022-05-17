@@ -1,12 +1,16 @@
-﻿FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+﻿FROM youtubedownloader-shared AS shared
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY Frontend.csproj .
-RUN dotnet restore Frontend.csproj
+#COPY --from=shared /app/publish ./packages
+COPY --from=shared /app/publish /app/build/wwwroot/_framework
+RUN dotnet restore
 COPY . .
-RUN dotnet build Frontend.csproj -c Release -o /app/build
+RUN dotnet build -c Release -o /app/build/
 
 FROM build AS publish
-RUN dotnet publish Frontend.csproj -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish/
 
 FROM nginx:alpine AS final
 WORKDIR /usr/share/nginx/html
