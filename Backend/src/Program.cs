@@ -29,7 +29,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors(
     policyBuilder =>
     {
-        policyBuilder.WithOrigins("http://localhost:4200")
+        policyBuilder.AllowAnyOrigin()
                      .AllowAnyMethod()
                      .AllowAnyHeader()
                      .WithExposedHeaders("*");
