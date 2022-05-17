@@ -1,10 +1,7 @@
-﻿FROM youtubedownloader-shared AS shared
-
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+﻿FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY Frontend.csproj .
-#COPY --from=shared /app/publish ./packages
-COPY --from=shared /app/publish /app/build/wwwroot/_framework
+COPY --from=youtubedownloader-shared /app/publish /app/build/wwwroot/_framework
 RUN dotnet restore
 COPY . .
 RUN dotnet build -c Release -o /app/build/

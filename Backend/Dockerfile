@@ -4,11 +4,9 @@ EXPOSE 80
 RUN apk add --no-cache ffmpeg
 RUN apk add --no-cache icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib
 
-FROM youtubedownloader-shared AS shared
-
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY --from=shared /app/publish ./packages
+COPY --from=youtubedownloader-shared /app/publish ./packages
 COPY Backend.csproj .
 RUN dotnet restore
 COPY . .
