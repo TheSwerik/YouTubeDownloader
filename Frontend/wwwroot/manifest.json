@@ -8,6 +8,11 @@
   "prefer_related_applications": false,
   "icons": [
     {
+      "src": "icon-800.png",
+      "type": "image/png",
+      "sizes": "800x800"
+    },
+    {
       "src": "icon-512.png",
       "type": "image/png",
       "sizes": "512x512"
