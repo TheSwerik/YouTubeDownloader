@@ -77,5 +77,14 @@ namespace Frontend.Resources {
                 return ResourceManager.GetString("INVALID_URL", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find YouTube-Video with URL: {0}.
+        /// </summary>
+        public static string VIDEO_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("VIDEO_NOT_FOUND", resourceCulture);
+            }
+        }
     }
 }

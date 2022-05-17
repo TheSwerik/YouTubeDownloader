@@ -30,4 +30,7 @@
     <data name="INVALID_URL" xml:space="preserve">
         <value>{0} is not a valid YouTube-URL.</value>
     </data>
+    <data name="VIDEO_NOT_FOUND" xml:space="preserve">
+        <value>Cannot find YouTube-Video with URL: {0}</value>
+    </data>
 </root>
