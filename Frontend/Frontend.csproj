@@ -56,7 +56,7 @@
 
     <ItemGroup>
         <ServiceWorker Include="wwwroot\service-worker.js">
-            <PublishedContent>wwwroot\service-worker.published.js</PublishedContent>
+<!--            <PublishedContent>wwwroot\service-worker.published.js</PublishedContent>-->
         </ServiceWorker>
     </ItemGroup>
 
