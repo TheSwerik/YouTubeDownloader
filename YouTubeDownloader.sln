@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Test", "Backend.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{EA9163E8-DE7E-4E72-A50D-171ABC032A69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBlazorPwa", "MyBlazorPwa\MyBlazorPwa.csproj", "{48394AE8-1B42-4D5F-9C63-4471153D60F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{EA9163E8-DE7E-4E72-A50D-171ABC032A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA9163E8-DE7E-4E72-A50D-171ABC032A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA9163E8-DE7E-4E72-A50D-171ABC032A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48394AE8-1B42-4D5F-9C63-4471153D60F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48394AE8-1B42-4D5F-9C63-4471153D60F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48394AE8-1B42-4D5F-9C63-4471153D60F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48394AE8-1B42-4D5F-9C63-4471153D60F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
