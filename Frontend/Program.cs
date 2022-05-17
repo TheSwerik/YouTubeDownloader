@@ -19,6 +19,7 @@ builder.Services
                            )
                        })
        .AddScoped<ExceptionLocalizationService>()
+       .AddScoped<UILocalizationService>()
        .AddScoped<DownloadService>()
        .AddBlazoredToast();
 

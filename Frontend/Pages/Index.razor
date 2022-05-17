@@ -1,9 +1,11 @@
 ﻿@page "/"
+@using Frontend.Service
+@inject UILocalizationService _uiLocalizationService
 
 <PageTitle>Download MP3</PageTitle>
 
 <div class="d-flex flex-column justify-content-evenly align-items-center full-size content-padding">
     <h1>Download MP3</h1>
     <input type="text" class="form-control" id="basic-url" @bind="Url" placeholder="url">
-    <button @onclick="Submit" type="button" class="btn btn-primary w-100">Submit</button>
+    <button @onclick="Submit" type="button" class="btn btn-primary w-100">@_uiLocalizationService["submit"]</button>
 </div>

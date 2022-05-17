@@ -29,6 +29,10 @@
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>Exception.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+        <EmbeddedResource Update="Resources\UI.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>UI.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -36,6 +40,11 @@
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>Exception.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\UI.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>UI.resx</DependentUpon>
         </Compile>
     </ItemGroup>
 

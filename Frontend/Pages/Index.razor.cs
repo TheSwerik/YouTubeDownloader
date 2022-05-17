@@ -6,7 +6,7 @@ namespace Frontend.Pages;
 public partial class Index
 {
     private string Url { get; set; } = "";
-    [Inject] private DownloadService Test { get; set; } = null!;
+    [Inject] private DownloadService DownloadService { get; set; } = null!;
 
-    private async void Submit() { await Test.DownloadSong(Url); }
+    private async void Submit() { await DownloadService.DownloadSong(Url); }
 }

@@ -24,7 +24,7 @@ public class DownloadService : Service
         if (!response.IsSuccessStatusCode)
         {
             var exceptionBody = await response.Content.GetExceptionBody();
-            ToastService.ShowError(ExceptionLocalizationService[exceptionBody.Type, exceptionBody.Body]);
+            ToastService.ShowError(ExceptionLocalizationService[exceptionBody.Type, exceptionBody.Body!]);
             return;
         }
 
