@@ -1,6 +1,4 @@
 ﻿#!/bin/bash
-# docker build -t YouTubeDownloader-frontend . --progress plain
-# docker compose up
 
 # Build Shared
 echo 'Building Shared Lib...'
@@ -23,7 +21,7 @@ cd ..
 # Start Compose
 echo 'Starting...'
 docker compose up -d
-#docker compose -f deploy.compose.yml up -d
 
+# Cleanup
 echo 'Cleanup...'
 docker image prune -af
