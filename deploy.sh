@@ -24,4 +24,4 @@ docker compose up -d
 
 # Cleanup
 echo 'Cleanup...'
-docker image prune -af
+docker system prune -af
