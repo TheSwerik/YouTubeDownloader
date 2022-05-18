@@ -24,4 +24,5 @@ docker compose up -d
 
 # Cleanup
 echo 'Cleanup...'
-docker system prune -af
+docker image prune -af
+#docker system prune -af # System Prune deletes build cache as well, which is not wanted because this is a local build. If this gets pushed to a repository someday then use system instead of image.
