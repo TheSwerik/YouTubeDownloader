@@ -1,6 +1,9 @@
 using System.Reflection;
+using System.Text;
 using Backend.Service;
 using Backend.Service.Exception.Util;
+
+Console.OutputEncoding = Encoding.UTF8;
 
 var builder = WebApplication.CreateBuilder(args);
 

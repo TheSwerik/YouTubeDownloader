@@ -1,8 +1,11 @@
+using System.Text;
 using Blazored.Toast;
 using Frontend;
 using Frontend.Service;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+
+Console.OutputEncoding = Encoding.UTF8;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

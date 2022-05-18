@@ -33,7 +33,7 @@ public class DownloadService : Service
         using var streamRef = new DotNetStreamReference(fileStream);
         await Js.InvokeVoidAsync(
             "downloadFileFromStream",
-            response.Content.Headers.ContentDisposition?.FileName,
+            response.Content.Headers.ContentDisposition?.FileNameStar,
             streamRef
         );
         ToastService.ShowSuccess("Erfolgreich heruntergeladen.");
