@@ -24,7 +24,7 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
-    <data name="submit" xml:space="preserve">
-        <value>Submit</value>
+    <data name="download" xml:space="preserve">
+        <value>Download</value>
     </data>
 </root>
