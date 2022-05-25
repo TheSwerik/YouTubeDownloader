@@ -5,17 +5,4 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
-    <ItemGroup>
-        <None Remove="app\publish\Shared.pdb"/>
-        <None Remove="app\publish\Shared.dll"/>
-        <None Remove="app\build\Shared.pdb"/>
-        <None Remove="app\build\Shared.dll"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="app\build"/>
-        <Folder Include="app\publish"/>
-    </ItemGroup>
-
 </Project>
