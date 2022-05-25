@@ -19,7 +19,8 @@ builder.Services.AddControllers(options => { options.Filters.Add<HttpResponseExc
 
 var ffmpegPath = builder.Configuration["FFMPEG_PATH"];
 if (ffmpegPath == null) throw new Exception("FFMPEG_PATH is missing"); //TODO exceptions
-builder.Services.AddSingleton(_ => new DownloadService(ffmpegPath));
+// builder.Services.AddSingleton(_ => new DownloadService(ffmpegPath));
+builder.Services.AddSingleton<DownloadService>();
 
 var app = builder.Build();
 
