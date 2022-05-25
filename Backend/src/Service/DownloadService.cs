@@ -1,15 +1,12 @@
 ﻿using System.Diagnostics;
 using Backend.Service.Exception;
 using Backend.Util;
-using VideoLibrary;
 
 namespace Backend.Service;
 
 public class DownloadService
 {
     private readonly ILogger<DownloadService> _logger;
-
-    private readonly YouTube _youtube = YouTube.Default;
 
     public DownloadService(ILogger<DownloadService> logger) { _logger = logger; }
 
