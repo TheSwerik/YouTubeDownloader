@@ -31,6 +31,7 @@ public class DownloadService : Service
         var bytes = await response.Content.ReadAsByteArrayAsync();
         var fileStream = new MemoryStream(bytes);
         using var streamRef = new DotNetStreamReference(fileStream);
+        Console.WriteLine(response.Content.Headers.ContentDisposition?.FileNameStar);
         await Js.InvokeVoidAsync(
             "downloadFileFromStream",
             response.Content.Headers.ContentDisposition?.FileNameStar,

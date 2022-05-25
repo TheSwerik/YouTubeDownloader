@@ -35,7 +35,8 @@ public class DownloadService
                                {
                                    WindowStyle = ProcessWindowStyle.Hidden,
                                    FileName = "yt-dlp",
-                                   Arguments = $"--extract-audio --audio-format mp3 {url}",
+                                   Arguments =
+                                       $"--parse-metadata \"%(uploader|)s:%(meta_artist)s\" --add-metadata --extract-audio --audio-format mp3 {url}",
                                    RedirectStandardOutput = true,
                                    RedirectStandardError = true,
                                    UseShellExecute = false
@@ -53,6 +54,7 @@ public class DownloadService
         const string searchText = "[ExtractAudio] Destination:";
         var result = output.Split("\n").FirstOrDefault(l => l.StartsWith(searchText));
         if (result is null) throw new YouTubeVideoNotFoundException("idk"); //TODO
+        _logger.LogInformation("{Output}", result);
         result = result[searchText.Length..].Trim();
         var newResult = result[..^"[123456789ab].mp3".Length].Trim() + ".mp3";
         File.Move(result, newResult);
