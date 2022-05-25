@@ -36,7 +36,7 @@ public class DownloadService
                                    WindowStyle = ProcessWindowStyle.Hidden,
                                    FileName = "yt-dlp",
                                    Arguments =
-                                       $"--parse-metadata \"%(uploader|)s:%(meta_artist)s\" --add-metadata --extract-audio --audio-format mp3 {url}",
+                                       $"--parse-metadata \"%(uploader|)s:%(meta_artist)s\" --add-metadata --extract-audio --audio-quality 0 --audio-format mp3 {url}",
                                    RedirectStandardOutput = true,
                                    RedirectStandardError = true,
                                    UseShellExecute = false
