@@ -7,7 +7,7 @@ public class YouTubeVideoDownloadException : BadRequestException
 {
     public YouTubeVideoDownloadException(string url) : base(
         new YouTubeDownloaderExceptionBody(
-            ExceptionType.CANT_DOWNLOAD,
+            ExceptionType.CantDownload,
             $"Cannot download YouTube-Video with URL: {url}",
             url
         )

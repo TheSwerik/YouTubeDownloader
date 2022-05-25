@@ -8,6 +8,6 @@ public static class ExtensionMethods
     public static async Task<YouTubeDownloaderExceptionBody> GetExceptionBody(this HttpContent content)
     {
         return await content.ReadFromJsonAsync<YouTubeDownloaderExceptionBody>() ??
-               new YouTubeDownloaderExceptionBody(ExceptionType.DEFAULT, "Failure");
+               new YouTubeDownloaderExceptionBody(ExceptionType.Default, "Failure");
     }
 }

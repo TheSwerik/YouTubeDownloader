@@ -2,7 +2,7 @@
 
 public enum ExceptionType
 {
-    DEFAULT,
-    INVALID_URL,
-    CANT_DOWNLOAD
+    Default,
+    InvalidUrl,
+    CantDownload
 }

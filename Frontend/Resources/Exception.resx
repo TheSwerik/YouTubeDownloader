@@ -24,13 +24,13 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
-    <data name="DEFAULT" xml:space="preserve">
+    <data name="Default" xml:space="preserve">
         <value>A failure has occured.</value>
     </data>
-    <data name="INVALID_URL" xml:space="preserve">
+    <data name="InvalidUrl" xml:space="preserve">
         <value>{0} is not a valid YouTube-URL.</value>
     </data>
-    <data name="VIDEO_NOT_FOUND" xml:space="preserve">
-        <value>Cannot find YouTube-Video with URL: {0}</value>
+    <data name="CantDownload" xml:space="preserve">
+        <value>Cannot download YouTube-Video with URL: {0}</value>
     </data>
 </root>
