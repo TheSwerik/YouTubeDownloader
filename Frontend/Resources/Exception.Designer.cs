@@ -61,29 +61,29 @@ namespace Frontend.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot download YouTube-Video with URL: {0}.
+        /// </summary>
+        public static string CantDownload {
+            get {
+                return ResourceManager.GetString("CantDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A failure has occured..
         /// </summary>
-        public static string DEFAULT {
+        public static string Default {
             get {
-                return ResourceManager.GetString("DEFAULT", resourceCulture);
+                return ResourceManager.GetString("Default", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to {0} is not a valid YouTube-URL..
         /// </summary>
-        public static string INVALID_URL {
+        public static string InvalidUrl {
             get {
-                return ResourceManager.GetString("INVALID_URL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot find YouTube-Video with URL: {0}.
-        /// </summary>
-        public static string VIDEO_NOT_FOUND {
-            get {
-                return ResourceManager.GetString("VIDEO_NOT_FOUND", resourceCulture);
+                return ResourceManager.GetString("InvalidUrl", resourceCulture);
             }
         }
     }

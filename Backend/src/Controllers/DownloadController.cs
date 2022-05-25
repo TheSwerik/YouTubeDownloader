@@ -1,4 +1,5 @@
 using Backend.Service;
+using Backend.Service.Exception;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
@@ -19,11 +20,11 @@ public class DownloadController : ControllerBase
     /// <summary>Downloads a YouTube-Video as a MP3 File.</summary>
     /// <param name="url">The URL for the YouTube-Video to be downloaded.</param>
     /// <exception cref="Backend.Service.Exception.InvalidUrlException">400 if the URL is not a valid YouTube-URL.</exception>
-    /// <exception cref="Backend.Service.Exception.YouTubeVideoNotFoundException">404 if the URL does not lead to a video.</exception>
+    /// <exception cref="YouTubeVideoDownloadException">400 if the video cannot be downloaded.</exception>
     /// <returns>The downloaded MP3-File with content-type "audio/mpeg".</returns>
     /// <response code="200">Returns the downloaded MP3-File with content-type "audio/mpeg".</response>
     /// <response code="400">If the URL is not a valid YouTube-URL.</response>
-    /// <response code="404">If the URL does not lead to a video.</response>
+    /// <response code="400">If the video cannot be downloaded.</response>
     [HttpGet("song")]
     [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
