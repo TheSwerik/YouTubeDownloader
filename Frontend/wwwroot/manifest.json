@@ -22,5 +22,12 @@
       "type": "image/png",
       "sizes": "192x192"
     }
-  ]
+  ],
+  "share_target": {
+    "action": "/api/download/song",
+    "method": "GET",
+    "params": {
+      "url": "url"
+    }
+  }
 }
