@@ -16,7 +16,7 @@ steps:
       registry: registry.swerik.dev
       repo: registry.swerik.dev/youtubedownloader/shared
       username: swerik
-      password: 8aCxy2UXfrGRLKwl%ct#qz#Xn#vI2BN5VS$NYmv
+      password: 8aCxy2UXfrGRLKwlctqzXnvI2BN5VSNYmv
         
         
 # Build Shared
