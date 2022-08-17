@@ -19,6 +19,34 @@ steps:
         from_secret: REGISTRY_USERNAME
       password:
         from_secret: REGISTRY_PASSWORD
+
+  - name: build backend
+    image: plugins/docker
+    settings:
+      dockerfile: Backend/Dockerfile
+      context: Backend
+      registry: registry.swerik.dev
+      repo: registry.swerik.dev/youtubedownloader/backend
+      username:
+        from_secret: REGISTRY_USERNAME
+      password:
+        from_secret: REGISTRY_PASSWORD
+    depends_on:
+      - build shared lib
+
+  - name: build frontend
+    image: plugins/docker
+    settings:
+      dockerfile: Frontend/Dockerfile
+      context: Frontend
+      registry: registry.swerik.dev
+      repo: registry.swerik.dev/youtubedownloader/frontend
+      username:
+        from_secret: REGISTRY_USERNAME
+      password:
+        from_secret: REGISTRY_PASSWORD
+    depends_on:
+      - build shared lib
         
         
 # Build Shared
