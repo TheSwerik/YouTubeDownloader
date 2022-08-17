@@ -4,6 +4,9 @@ name: deploy
 platform:
   os: linux
   arch: arm64
+when:
+  branch:
+    - main
 steps:
   - name: build
     image: alpine
