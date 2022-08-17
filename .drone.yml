@@ -13,6 +13,7 @@ steps:
     settings:
       dockerfile: Shared/Dockerfile
       context: Shared
+      registry: registry:5000
         
         
 # Build Shared
