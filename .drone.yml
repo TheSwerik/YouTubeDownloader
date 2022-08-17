@@ -6,6 +6,6 @@ platform:
   arch: arm64
 steps:
   - name: build
-#    image: alpine
+    image: alpine
     commands:
       - echo hello
