@@ -10,7 +10,7 @@ RUN chmod a+rx /usr/local/bin/yt-dlp
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY --from=youtubedownloader-shared /app/publish ./packages
+COPY --from=registry.swerik.dev/youtubedownloader/shared /app/publish ./packages
 COPY Backend.csproj .
 RUN dotnet restore
 COPY . .
