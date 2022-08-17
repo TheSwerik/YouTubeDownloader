@@ -4,9 +4,8 @@ name: deploy
 platform:
   os: linux
   arch: arm64
-when:
+trigger:
   branch:
-#    - main
     - master
 steps:
   - name: build
