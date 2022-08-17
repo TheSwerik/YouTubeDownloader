@@ -13,8 +13,8 @@ steps:
     settings:
       dockerfile: Shared/Dockerfile
       context: Shared
-      registry: registry
-      repo: registry/youtubedownloader/shared
+      registry: localhost:5000
+      repo: localhost:5000/youtubedownloader/shared
         
         
 # Build Shared
