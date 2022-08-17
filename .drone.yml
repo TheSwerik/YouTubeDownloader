@@ -1,6 +1,6 @@
 ﻿kind: pipeline
 type: docker
-name: deploy
+name: build
 platform:
   os: linux
   arch: arm64
@@ -47,8 +47,24 @@ steps:
         from_secret: REGISTRY_PASSWORD
     depends_on:
       - build shared lib
-        
-  - name: deploy compose
-    image: plugins/ansible:3
-    settings:
-      playbook: ansible/playbook.yml
+---
+kind: pipeline
+type: ssh
+name: deploy
+platform:
+  os: linux
+  arch: arm64
+trigger:
+  branch:
+    - main
+
+server:
+  host: localhost
+  user: erik
+  password:
+    from_secret: SSH_PASSWORD
+
+steps:
+  - name: greeting
+    commands:
+      - echo hello world
