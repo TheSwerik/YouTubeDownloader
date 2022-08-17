@@ -8,6 +8,6 @@ public static class ExtensionMethods
 
     public static bool IsInvalidYouTubeUrl(this string url)
     {
-        return !Regex.IsMatch(url.Trim(), "^(https{0,1}://){0,1}(www.){0,1}(youtube.com|youtu.be)/.+$");
+        return !Regex.IsMatch(url.Trim(), "^(https{0,1}://){0,1}(www.){0,1}(youtube.com|youtu.be)/[a-zA-Z0-9&?=_-]+$");
     }
 }
