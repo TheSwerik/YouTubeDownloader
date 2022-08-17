@@ -6,7 +6,7 @@ platform:
   arch: arm64
 trigger:
   branch:
-    - master
+    - main
 steps:
   - name: build
     image: alpine
