@@ -6,7 +6,8 @@ platform:
   arch: arm64
 when:
   branch:
-    - main
+#    - main
+    - master
 steps:
   - name: build
     image: alpine
