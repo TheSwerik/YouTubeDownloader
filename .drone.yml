@@ -1,25 +1,4 @@
 ﻿kind: pipeline
-type: ssh
-name: test
-platform:
-  os: linux
-  arch: arm64
-trigger:
-  branch:
-    - main
-
-server:
-  host: localhost
-  user: erik
-  password:
-    from_secret: SSH_PASSWORD
-
-steps:
-  - name: greeting
-    commands:
-      - echo hello world
----
-kind: pipeline
 type: docker
 name: build
 platform:
@@ -80,7 +59,7 @@ trigger:
     - main
 
 server:
-  host: localhost
+  host: 172.17.0.1
   user: erik
   password:
     from_secret: SSH_PASSWORD
