@@ -16,6 +16,9 @@ steps:
   - name: greeting
     commands:
       - echo hello world
+  - name: test
+    commands:
+      - touch ~/test
 #---
 #kind: pipeline
 #type: docker
@@ -78,7 +81,7 @@ trigger:
     - main
 
 server:
-  host: 192.168.2.201
+  host: erikpi
   user: erik
   password:
     from_secret: SSH_PASSWORD
