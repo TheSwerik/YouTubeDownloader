@@ -18,7 +18,7 @@ steps:
       - echo hello world
   - name: test
     commands:
-      - touch ~/test
+      - docker ps -a 
 #---
 #kind: pipeline
 #type: docker
