@@ -15,10 +15,10 @@ server:
 steps:
   - name: greeting
     commands:
-      - echo hello world
+      - ls -lisa
   - name: test
     commands:
-      - docker ps -a 
+      - docker compose
 #---
 #kind: pipeline
 #type: docker
@@ -69,24 +69,3 @@ steps:
 #        from_secret: REGISTRY_PASSWORD
 #    depends_on:
 #      - build shared lib
----
-kind: pipeline
-type: ssh
-name: deploy
-platform:
-  os: linux
-  arch: arm64
-trigger:
-  branch:
-    - main
-
-server:
-  host: erikpi
-  user: erik
-  password: sdads
-#    from_secret: SSH_PASSWORD
-
-steps:
-  - name: greeting
-    commands:
-      - echo hello world
