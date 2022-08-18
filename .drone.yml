@@ -83,8 +83,8 @@ trigger:
 server:
   host: erikpi
   user: erik
-  password:
-    from_secret: SSH_PASSWORD
+#  password:
+#    from_secret: SSH_PASSWORD
 
 steps:
   - name: greeting
