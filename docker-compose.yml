@@ -1,4 +1,5 @@
-version: "3.9"
+version: "3.*"
+name: YouTubeDownloader
 services:
   backend:
     container_name: backend
@@ -35,8 +36,7 @@ services:
       - backend
     networks:
       - default
-    ports:
-      - "4200:80"
+      - proxy
     deploy:
       mode: replicated
       replicas: 1
@@ -60,3 +60,5 @@ services:
 networks:
   default:
     driver: bridge
+  proxy:
+    external: true
