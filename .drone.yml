@@ -78,7 +78,7 @@ trigger:
     - main
 
 server:
-  host: localhost
+  host: erikpi
   user: erik
   password:
     from_secret: SSH_PASSWORD
