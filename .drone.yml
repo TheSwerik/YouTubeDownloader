@@ -51,7 +51,8 @@ steps:
 kind: pipeline
 type: ssh
 name: test
-depends_on: build
+depends_on:
+  - build
 platform:
   os: linux
   arch: arm64
