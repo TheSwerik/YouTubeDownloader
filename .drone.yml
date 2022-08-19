@@ -61,7 +61,8 @@ trigger:
     - main
 server:
   host: 172.19.0.1
-  user: erik
+  user:
+    from_secret: SSH_USERNAME
   password:
     from_secret: SSH_PASSWORD
 steps:
