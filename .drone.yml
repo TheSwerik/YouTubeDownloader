@@ -60,7 +60,7 @@ trigger:
   branch:
     - main
 server:
-  host: 172.19.0.1
+  host: erikpi
   user:
     from_secret: SSH_USERNAME
   password:
