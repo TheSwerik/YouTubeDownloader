@@ -7,29 +7,14 @@ platform:
 trigger:
   branch:
     - main
-steps:
-  - name: test1
-    commands:
-      - ping registry -c 10
-  - name: test2
-    commands:
-      - ping registry:5000 -c 10
-  - name: test3
-    commands:
-      - docker login registry:5000 -u $USERNAME -p $PASSWORD
-    environment:
-      USERNAME:
-        from_secret: $REGISTRY_USERNAME
-      PASSWORD:
-        from_secret: $REGISTRY_PASSWORD
-        
+steps:        
   - name: build shared lib
     image: plugins/docker
     settings:
       dockerfile: Shared/Dockerfile
       context: Shared
-      registry: localhost:5000
-      repo: localhost:5000/youtubedownloader/shared
+      registry: registry:5000
+      repo: registry:5000/youtubedownloader/shared
       username:
         from_secret: REGISTRY_USERNAME
       password:
