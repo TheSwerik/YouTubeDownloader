@@ -68,8 +68,12 @@ server:
 steps:
   - name: docker login
     commands:
-      - docker login localhost:5000 -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD
-    secrets: [ REGISTRY_USERNAME, REGISTRY_PASSWORD ]
+      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
+    environment:
+      USERNAME:
+        from_secret: $REGISTRY_USERNAME
+      PASSWORD:
+        from_secret: $REGISTRY_PASSWORD
   - name: deploy
     commands:
       - docker compose up -d
