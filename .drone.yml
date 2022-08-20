@@ -13,8 +13,8 @@ steps:
     settings:
       dockerfile: Shared/Dockerfile
       context: Shared
-      registry: $DOCKER_HOST_REGISTRY:5000
-      repo: $DOCKER_HOST_REGISTRY:5000/youtubedownloader/shared
+      registry: registry.swerik.dev
+      repo: registry.swerik.dev/youtubedownloader/shared
       username:
         from_secret: REGISTRY_USERNAME
       password:
@@ -25,8 +25,8 @@ steps:
     settings:
       dockerfile: Backend/Dockerfile
       context: Backend
-      registry: localhost:5000
-      repo: localhost:5000/youtubedownloader/backend
+      registry: registry.swerik.dev
+      repo: registry.swerik.dev/youtubedownloader/backend
       username:
         from_secret: REGISTRY_USERNAME
       password:
@@ -39,8 +39,8 @@ steps:
     settings:
       dockerfile: Frontend/Dockerfile
       context: Frontend
-      registry: localhost:5000
-      repo: localhost:5000/youtubedownloader/frontend
+      registry: registry.swerik.dev
+      repo: registry.swerik.dev/youtubedownloader/frontend
       username:
         from_secret: REGISTRY_USERNAME
       password:
