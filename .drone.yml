@@ -14,7 +14,7 @@ steps:
   - name: test2
     commands:
       - ping registry:5000 -c 10
-  - name: test2
+  - name: test3
     commands:
       - docker login registry:5000 -u $USERNAME -p $PASSWORD
     environment:
