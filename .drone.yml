@@ -13,8 +13,8 @@ steps:
     settings:
       dockerfile: Shared/Dockerfile
       context: Shared
-      registry: registry
-      repo: registry/youtubedownloader/shared
+      registry: registry:5000
+      repo: registry:5000/youtubedownloader/shared
       username:
         from_secret: REGISTRY_USERNAME
       password:
