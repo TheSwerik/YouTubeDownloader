@@ -66,9 +66,10 @@ server:
   password:
     from_secret: SSH_PASSWORD
 steps:
-  - name: ls
+  - name: deploy
     commands:
-      - ls -lisa
+      - docker login registry.swerik.dev -u $REGISTRY_USERNAME -p $REGISTRY_PASSWORD
+    secrets: [ REGISTRY_USERNAME, REGISTRY_PASSWORD ]
   - name: deploy
     commands:
       - docker compose up -d
