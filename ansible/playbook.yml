@@ -1,0 +1,39 @@
+﻿---
+- name: deploy
+  hosts: erikpi
+  vars:
+    docker_compose_url: https://github.com/docker/compose/releases/download/v2.9.0/docker-compose-linux-x86_64
+  tasks:
+    - name: Get Docker Compose Checksum # Check ob Docker Compose heruntergeladen werden muss
+      uri:
+        url: "{{ docker_compose_url }}.sha256"
+        return_content: true
+      register: checksum
+
+    - name: Create Docker Plugins Folder
+      file:
+        path: ./.docker/cli-plugins
+        recurse: true
+        state: directory
+
+    - name: Download Docker Compose
+      get_url:
+        url: "{{ docker_compose_url }}"
+        dest: ./.docker/cli-plugins/docker-compose
+        checksum: "sha256:{{ checksum.content.split(' ')[0] }}"
+        mode: u=rwx,g=rx,o=rx
+
+    - name: Copy Compose-File
+      copy:
+        src: ../docker-compose.yml
+        dest: docker-compose.yml
+
+    - name: Docker login
+      command: "docker login -u {{ registry_username }} -p {{ registry_password }} registry.swerik.dev"
+
+    - name: Deploy Containers
+      command: docker compose -f docker-compose.yml up -d --pull always
+      environment:
+
+    - name: Docker Prune
+      command: docker system prune -af
