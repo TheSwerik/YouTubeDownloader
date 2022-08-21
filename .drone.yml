@@ -1,26 +1,55 @@
 ﻿kind: pipeline
-type: docker
-name: build
+type: ssh
+name: Deploy
+depends_on:
+  - build
 platform:
   os: linux
   arch: arm64
 trigger:
   branch:
     - main
+server:
+  host: erikpi
+  user:
+    from_secret: SSH_USERNAME
+  password:
+    from_secret: SSH_PASSWORD
 steps:
   - name: test
-    image: plugins/ansible:3
-    settings:
-      playbook: ansible/playbook.yml
-      inventory: ansible/hosts
-      private_key:
-        from_secret: SSH_PRIVATE_KEY
-      ssh_extra_args: "-o StrictHostKeyChecking=no"
-      syntax_check: true
-      extra_vars: 'registry_username=drone'
-      user:
-        from_secret: SSH_USERNAME
-
+    commands:
+      - cd /home/drone
+  - name: test3
+    commands:
+      - pwd
+      - ls -lisa ~
+  - name: test2
+    commands:
+      - cd /home/drone
+      - pwd
+  - name: test4
+    commands:
+      - cd /home/drone & pwd
+#  - name: docker login & Deploy
+#    commands:
+#      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
+#      - docker pull registry.swerik.dev/youtubedownloader/frontend
+#      - docker compose up -d
+#    environment:
+#      USERNAME:
+#        from_secret: REGISTRY_USERNAME
+#      PASSWORD:
+#        from_secret: REGISTRY_PASSWORD
+#kind: pipeline
+#type: docker
+#name: build
+#platform:
+#  os: linux
+#  arch: arm64
+#trigger:
+#  branch:
+#    - main
+#steps:
 #  - name: build shared lib
 #    image: plugins/docker
 #    settings:
