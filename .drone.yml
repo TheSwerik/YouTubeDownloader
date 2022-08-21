@@ -77,7 +77,7 @@ steps:
       - touch ~/a
   - name: test3
     commands:
-      - cd ~ & pwd
+      - ls -lisa ~
   - name: test2
     commands:
       - pwd
