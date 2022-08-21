@@ -18,8 +18,16 @@ steps:
     commands:
       - cd /home/drone
       - pwd
+      - echo $USERNAME
+      - echo ${USERNAME}
+      - echo $${USERNAME}
       - docker login localhost:5000 -u $USERNAME -p $PASSWORD
       - docker pull registry.swerik.dev/youtubedownloader/frontend
+    environment:
+      USERNAME:
+        from_secret: REGISTRY_USERNAME
+      PASSWORD:
+        from_secret: REGISTRY_PASSWORD
 #  - name: docker login & Deploy
 #    commands:
 #      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
