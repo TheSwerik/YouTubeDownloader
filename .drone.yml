@@ -1,8 +1,6 @@
 ﻿kind: pipeline
 type: ssh
 name: Deploy
-depends_on:
-  - build
 platform:
   os: linux
   arch: arm64
