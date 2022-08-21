@@ -15,7 +15,7 @@ steps:
       context: Shared
       registry: registry.swerik.dev
       repo: registry.swerik.dev/youtubedownloader/shared
-      cache_from: registry.swerik.dev/youtubedownloader/shared
+      cache_from: registry.swerik.dev/youtubedownloader/shared:latest
       tags: latest
       username:
         from_secret: REGISTRY_USERNAME
@@ -29,7 +29,7 @@ steps:
       context: Backend
       registry: registry.swerik.dev
       repo: registry.swerik.dev/youtubedownloader/backend
-      cache_from: registry.swerik.dev/youtubedownloader/backend
+      cache_from: registry.swerik.dev/youtubedownloader/backend:latest
       tags: latest
       username:
         from_secret: REGISTRY_USERNAME
@@ -45,7 +45,7 @@ steps:
       context: Frontend
       registry: registry.swerik.dev
       repo: registry.swerik.dev/youtubedownloader/frontend
-      cache_from: registry.swerik.dev/youtubedownloader/frontend
+      cache_from: registry.swerik.dev/youtubedownloader/frontend:latest
       tags: latest
       username:
         from_secret: REGISTRY_USERNAME
@@ -74,7 +74,7 @@ server:
 steps:
   - name: test
     commands:
-      - touch a
+      - touch ~/a
   - name: test2
     commands:
       - pwd
