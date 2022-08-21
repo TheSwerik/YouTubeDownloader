@@ -75,7 +75,6 @@ steps:
   - name: docker login & Deploy
     commands:
       - docker login localhost:5000 -u $USERNAME -p $PASSWORD
-      - docker login localhost:5000 -u $USERNAME -p $PASSWORD & docker pull registry.swerik.dev/youtubedownloader/frontend
       - docker pull registry.swerik.dev/youtubedownloader/frontend
       - docker compose up -d
     environment:
