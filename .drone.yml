@@ -66,14 +66,12 @@ server:
   password:
     from_secret: SSH_PASSWORD
 steps:
-  - name: docker login
+  - name: docker login & Deploy
     commands:
       - docker login localhost:5000 -u $USERNAME -p $PASSWORD
+      - docker compose up -d
     environment:
       USERNAME:
         from_secret: REGISTRY_USERNAME
       PASSWORD:
         from_secret: REGISTRY_PASSWORD
-  - name: deploy
-    commands:
-      - docker compose up -d
