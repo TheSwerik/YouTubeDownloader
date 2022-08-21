@@ -1,35 +1,35 @@
-﻿kind: pipeline
-type: ssh
-name: Deploy
-platform:
-  os: linux
-  arch: arm64
-trigger:
-  branch:
-    - main
-server:
-  host: erikpi
-  user:
-    from_secret: SSH_USERNAME
-  password:
-    from_secret: SSH_PASSWORD
-steps:
-  - name: test2
-    commands:
-      - cd /home/drone
-      - pwd
-      - echo $USERNAME
-      - echo ${USERNAME}
-      - echo $${USERNAME}
-      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
-      - pwd
-      - ls -lisa
-      - docker --config /home/drone/.docker pull registry.swerik.dev/youtubedownloader/frontend
-    environment:
-      USERNAME:
-        from_secret: REGISTRY_USERNAME
-      PASSWORD:
-        from_secret: REGISTRY_PASSWORD
+﻿#kind: pipeline
+#type: ssh
+#name: Deploy
+#platform:
+#  os: linux
+#  arch: arm64
+#trigger:
+#  branch:
+#    - main
+#server:
+#  host: erikpi
+#  user:
+#    from_secret: SSH_USERNAME
+#  password:
+#    from_secret: SSH_PASSWORD
+#steps:
+#  - name: test2
+#    commands:
+#      - cd /home/drone
+#      - pwd
+#      - echo $USERNAME
+#      - echo ${USERNAME}
+#      - echo $${USERNAME}
+#      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
+#      - pwd
+#      - ls -lisa
+#      - docker --config /home/drone/.docker pull registry.swerik.dev/youtubedownloader/frontend
+#    environment:
+#      USERNAME:
+#        from_secret: REGISTRY_USERNAME
+#      PASSWORD:
+#        from_secret: REGISTRY_PASSWORD
 #  - name: docker login & Deploy
 #    commands:
 #      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
@@ -96,40 +96,33 @@ steps:
 #    depends_on:
 #      - build shared lib
 #---
-#kind: pipeline
-#type: ssh
-#name: test
+kind: pipeline
+type: ssh
+name: test
 #depends_on:
 #  - build
-#platform:
-#  os: linux
-#  arch: arm64
-#trigger:
-#  branch:
-#    - main
-#server:
-#  host: erikpi
-#  user:
-#    from_secret: SSH_USERNAME
-#  password:
-#    from_secret: SSH_PASSWORD
-#steps:
-#  - name: test
-#    commands:
-#      - touch ~/a
-#  - name: test3
-#    commands:
-#      - ls -lisa ~
-#  - name: test2
-#    commands:
-#      - pwd
-#  - name: docker login & Deploy
-#    commands:
-#      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
-#      - docker pull registry.swerik.dev/youtubedownloader/frontend
-#      - docker compose up -d
-#    environment:
-#      USERNAME:
-#        from_secret: REGISTRY_USERNAME
-#      PASSWORD:
-#        from_secret: REGISTRY_PASSWORD
+platform:
+  os: linux
+  arch: arm64
+trigger:
+  branch:
+    - main
+server:
+  host: erikpi
+  user:
+    from_secret: SSH_USERNAME
+  password:
+    from_secret: SSH_PASSWORD
+steps:
+  - name: docker login & Deploy
+    commands:
+      - docker --config /home/drone/.docker login localhost:5000 -u $USERNAME -p $PASSWORD
+      - docker --config /home/drone/.docker pull registry.swerik.dev/youtubedownloader/frontend
+      - docker --config /home/drone/.docker compose up -d
+      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
+      - docker pull registry.swerik.dev/youtubedownloader/frontend
+    environment:
+      USERNAME:
+        from_secret: REGISTRY_USERNAME
+      PASSWORD:
+        from_secret: REGISTRY_PASSWORD
