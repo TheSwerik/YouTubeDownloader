@@ -2,7 +2,7 @@ version: "3.*"
 name: YouTubeDownloader
 services:
   backend:
-    container_name: backend
+    container_name: youtubedownloader-backend
     image: registry.swerik.dev/youtubedownloader/backend
     networks:
       - default
@@ -30,7 +30,7 @@ services:
         max-size: '10M'
         max-file: '10'
   frontend:
-    container_name: frontend
+    container_name: youtubedownloader-frontend
     image: registry.swerik.dev/youtubedownloader/frontend
     depends_on: 
       - backend

@@ -119,8 +119,6 @@ steps:
       - docker --config /home/drone/.docker login localhost:5000 -u $USERNAME -p $PASSWORD
       - docker --config /home/drone/.docker pull registry.swerik.dev/youtubedownloader/frontend
       - docker --config /home/drone/.docker compose up -d
-      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
-      - docker pull registry.swerik.dev/youtubedownloader/frontend
     environment:
       USERNAME:
         from_secret: REGISTRY_USERNAME
