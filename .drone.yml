@@ -56,7 +56,7 @@ steps:
 ---
 kind: pipeline
 type: ssh
-name: test
+name: Deploy
 depends_on:
   - build
 platform:
