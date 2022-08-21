@@ -17,88 +17,89 @@ steps:
       ssh_extra_args: "-o StrictHostKeyChecking=no"
       syntax_check: true
       extra_vars: 'registry_username=drone'
-      user: drone
+      user:
+        from_secret: SSH_USERNAME
 
-  - name: build shared lib
-    image: plugins/docker
-    settings:
-      dockerfile: Shared/Dockerfile
-      context: Shared
-      registry: registry.swerik.dev
-      repo: registry.swerik.dev/youtubedownloader/shared
-      cache_from: registry.swerik.dev/youtubedownloader/shared:latest
-      tags: latest
-      username:
-        from_secret: REGISTRY_USERNAME
-      password:
-        from_secret: REGISTRY_PASSWORD
-
-  - name: build backend
-    image: plugins/docker
-    settings:
-      dockerfile: Backend/Dockerfile
-      context: Backend
-      registry: registry.swerik.dev
-      repo: registry.swerik.dev/youtubedownloader/backend
-      cache_from: registry.swerik.dev/youtubedownloader/backend:latest
-      tags: latest
-      username:
-        from_secret: REGISTRY_USERNAME
-      password:
-        from_secret: REGISTRY_PASSWORD
-    depends_on:
-      - build shared lib
-
-  - name: build frontend
-    image: plugins/docker
-    settings:
-      dockerfile: Frontend/Dockerfile
-      context: Frontend
-      registry: registry.swerik.dev
-      repo: registry.swerik.dev/youtubedownloader/frontend
-      cache_from: registry.swerik.dev/youtubedownloader/frontend:latest
-      tags: latest
-      username:
-        from_secret: REGISTRY_USERNAME
-      password:
-        from_secret: REGISTRY_PASSWORD
-    depends_on:
-      - build shared lib
----
-kind: pipeline
-type: ssh
-name: test
-depends_on:
-  - build
-platform:
-  os: linux
-  arch: arm64
-trigger:
-  branch:
-    - main
-server:
-  host: erikpi
-  user:
-    from_secret: SSH_USERNAME
-  password:
-    from_secret: SSH_PASSWORD
-steps:
-  - name: test
-    commands:
-      - touch ~/a
-  - name: test3
-    commands:
-      - ls -lisa ~
-  - name: test2
-    commands:
-      - pwd
-  - name: docker login & Deploy
-    commands:
-      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
-      - docker pull registry.swerik.dev/youtubedownloader/frontend
-      - docker compose up -d
-    environment:
-      USERNAME:
-        from_secret: REGISTRY_USERNAME
-      PASSWORD:
-        from_secret: REGISTRY_PASSWORD
+#  - name: build shared lib
+#    image: plugins/docker
+#    settings:
+#      dockerfile: Shared/Dockerfile
+#      context: Shared
+#      registry: registry.swerik.dev
+#      repo: registry.swerik.dev/youtubedownloader/shared
+#      cache_from: registry.swerik.dev/youtubedownloader/shared:latest
+#      tags: latest
+#      username:
+#        from_secret: REGISTRY_USERNAME
+#      password:
+#        from_secret: REGISTRY_PASSWORD
+#
+#  - name: build backend
+#    image: plugins/docker
+#    settings:
+#      dockerfile: Backend/Dockerfile
+#      context: Backend
+#      registry: registry.swerik.dev
+#      repo: registry.swerik.dev/youtubedownloader/backend
+#      cache_from: registry.swerik.dev/youtubedownloader/backend:latest
+#      tags: latest
+#      username:
+#        from_secret: REGISTRY_USERNAME
+#      password:
+#        from_secret: REGISTRY_PASSWORD
+#    depends_on:
+#      - build shared lib
+#
+#  - name: build frontend
+#    image: plugins/docker
+#    settings:
+#      dockerfile: Frontend/Dockerfile
+#      context: Frontend
+#      registry: registry.swerik.dev
+#      repo: registry.swerik.dev/youtubedownloader/frontend
+#      cache_from: registry.swerik.dev/youtubedownloader/frontend:latest
+#      tags: latest
+#      username:
+#        from_secret: REGISTRY_USERNAME
+#      password:
+#        from_secret: REGISTRY_PASSWORD
+#    depends_on:
+#      - build shared lib
+#---
+#kind: pipeline
+#type: ssh
+#name: test
+#depends_on:
+#  - build
+#platform:
+#  os: linux
+#  arch: arm64
+#trigger:
+#  branch:
+#    - main
+#server:
+#  host: erikpi
+#  user:
+#    from_secret: SSH_USERNAME
+#  password:
+#    from_secret: SSH_PASSWORD
+#steps:
+#  - name: test
+#    commands:
+#      - touch ~/a
+#  - name: test3
+#    commands:
+#      - ls -lisa ~
+#  - name: test2
+#    commands:
+#      - pwd
+#  - name: docker login & Deploy
+#    commands:
+#      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
+#      - docker pull registry.swerik.dev/youtubedownloader/frontend
+#      - docker compose up -d
+#    environment:
+#      USERNAME:
+#        from_secret: REGISTRY_USERNAME
+#      PASSWORD:
+#        from_secret: REGISTRY_PASSWORD
