@@ -1,6 +1,6 @@
 ﻿---
 - name: deploy
-  hosts: erikpi
+  hosts: test
   vars:
     docker_compose_url: https://github.com/docker/compose/releases/download/v2.9.0/docker-compose-linux-x86_64
   tasks:
