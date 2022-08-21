@@ -15,6 +15,8 @@ steps:
       context: Shared
       registry: registry.swerik.dev
       repo: registry.swerik.dev/youtubedownloader/shared
+      cache_from: registry.swerik.dev/youtubedownloader/shared
+      tags: latest
       username:
         from_secret: REGISTRY_USERNAME
       password:
