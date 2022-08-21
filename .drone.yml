@@ -14,20 +14,12 @@ server:
   password:
     from_secret: SSH_PASSWORD
 steps:
-  - name: test
-    commands:
-      - cd /home/drone
-  - name: test3
-    commands:
-      - pwd
-      - ls -lisa ~
   - name: test2
     commands:
       - cd /home/drone
       - pwd
-  - name: test4
-    commands:
-      - cd /home/drone & pwd
+      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
+      - docker pull registry.swerik.dev/youtubedownloader/frontend
 #  - name: docker login & Deploy
 #    commands:
 #      - docker login localhost:5000 -u $USERNAME -p $PASSWORD
