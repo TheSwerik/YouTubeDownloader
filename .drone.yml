@@ -22,6 +22,8 @@ steps:
       - echo ${USERNAME}
       - echo $${USERNAME}
       - docker login localhost:5000 -u $USERNAME -p $PASSWORD
+      - pwd
+      - ls -lisa
       - docker pull registry.swerik.dev/youtubedownloader/frontend
     environment:
       USERNAME:
