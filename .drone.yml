@@ -75,6 +75,9 @@ steps:
   - name: test
     commands:
       - touch a
+  - name: test2
+    commands:
+      - pwd
   - name: docker login & Deploy
     commands:
       - docker login localhost:5000 -u $USERNAME -p $PASSWORD
