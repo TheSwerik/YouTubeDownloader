@@ -29,6 +29,8 @@ steps:
       context: Backend
       registry: registry.swerik.dev
       repo: registry.swerik.dev/youtubedownloader/backend
+      cache_from: registry.swerik.dev/youtubedownloader/backend
+      tags: latest
       username:
         from_secret: REGISTRY_USERNAME
       password:
@@ -43,6 +45,8 @@ steps:
       context: Frontend
       registry: registry.swerik.dev
       repo: registry.swerik.dev/youtubedownloader/frontend
+      cache_from: registry.swerik.dev/youtubedownloader/frontend
+      tags: latest
       username:
         from_secret: REGISTRY_USERNAME
       password:
