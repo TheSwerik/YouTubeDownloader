@@ -10,13 +10,15 @@ public partial class Index
     // private string Url { get; set; } = "";
     private bool IsLoading { get; set; }
     [Inject] private DownloadService DownloadService { get; set; } = null!;
+    protected override Task OnInitializedAsync() { return Submit(); }
 
-    private async void Submit()
+    private async Task Submit()
     {
-        Console.WriteLine(Url);
+        if (Url is null) return;
         IsLoading = true;
         await DownloadService.DownloadSong(Url);
         IsLoading = false;
+        Url = null;
         StateHasChanged();
     }
 }
