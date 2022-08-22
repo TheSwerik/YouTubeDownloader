@@ -5,7 +5,7 @@ namespace Frontend.Pages;
 
 public partial class Index
 {
-    [Parameter] [SupplyParameterFromQuery(Name = "{QUERY PARAMETER NAME}")] public string? Url { get; set; }
+    [Parameter] [SupplyParameterFromQuery(Name = "url")] public string? Url { get; set; }
 
     // private string Url { get; set; } = "";
     private bool IsLoading { get; set; }
