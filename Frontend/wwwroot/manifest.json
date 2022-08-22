@@ -24,7 +24,7 @@
     }
   ],
   "share_target": {
-    "action": "",
+    "action": "/index",
     "method": "GET",
     "params": {
       "url": "url"
