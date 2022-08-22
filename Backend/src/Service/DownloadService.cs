@@ -15,13 +15,12 @@ public class DownloadService
         if (url.IsVideoId()) url = $"youtu.be/{url}";
         if (url.IsInvalidYouTubeUrl()) throw new InvalidUrlException(url);
 
-
         var processStartInfo = new ProcessStartInfo
                                {
                                    WindowStyle = ProcessWindowStyle.Hidden,
-                                   FileName = "yt-dlp",
+                                   FileName = "yt-dlp.exe",
                                    Arguments =
-                                       $"--parse-metadata \"%(uploader|)s:%(meta_artist)s\" --add-metadata --extract-audio --audio-quality 0 --audio-format mp3 {url}",
+                                       $"--parse-metadata \"%(uploader|)s:%(meta_artist)s\" --format bestaudio --add-metadata --extract-audio --audio-quality 0 --audio-format best {url}",
                                    RedirectStandardOutput = true,
                                    RedirectStandardError = true,
                                    UseShellExecute = false
@@ -39,7 +38,7 @@ public class DownloadService
         var result = output.Split("\n").FirstOrDefault(l => l.StartsWith(searchText));
         if (result is null) throw new YouTubeVideoDownloadException(url);
         result = result[searchText.Length..].Trim();
-        var newResult = result[..^"[123456789ab].mp3".Length].Trim() + ".mp3";
+        var newResult = $"{Guid.NewGuid()}.mp3";
         File.Move(result, newResult);
 
         return newResult;

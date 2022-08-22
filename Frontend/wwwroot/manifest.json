@@ -24,7 +24,7 @@
     }
   ],
   "share_target": {
-    "action": "/api/download/song",
+    "action": "/",
     "method": "GET",
     "params": {
       "url": "url"
