@@ -6,4 +6,13 @@
     <h1>Download MP3</h1>
     <input type="text" class="form-control" id="basic-url" @bind="Url" placeholder="url">
     <button disabled="@IsLoading" @onclick="Submit" type="button" class="btn btn-primary w-100">@UiLocalizationService["download"]</button>
+    @if (IsLoading)
+    {
+        <div>
+            <div class="spinner-border">
+                <span class="visually-hidden">Herunterladen...</span>
+            </div>
+            <span>Herunterladen...</span>
+        </div>
+    }
 </div>
