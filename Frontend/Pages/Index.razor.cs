@@ -11,6 +11,7 @@ public partial class Index
     private bool IsLoading { get; set; }
     [Inject] private DownloadService DownloadService { get; set; } = null!;
     protected override Task OnInitializedAsync() { return Submit(); }
+    protected override Task OnParametersSetAsync() { return Submit(); }
 
     private async Task Submit()
     {
