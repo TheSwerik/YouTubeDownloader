@@ -37,7 +37,7 @@ RUN dotnet test
 
 FROM dependencyfetcher as builder
 COPY --from=source-files /data .
-RUN dotnet publish -c Release -o ./publish
+RUN dotnet publish -c Release -o /build/publish
 
 #########################################################################
 #########################################################################

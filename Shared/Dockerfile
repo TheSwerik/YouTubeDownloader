@@ -37,4 +37,4 @@ RUN dotnet test
 
 FROM dependencyfetcher as final
 COPY --from=source-files /data .
-RUN dotnet publish -c Release -o ./publish
+RUN dotnet publish -c Release -o /build/publish
