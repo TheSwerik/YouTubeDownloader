@@ -12,7 +12,7 @@ steps:
   - name: build shared lib1
     image: moby/buildkit
     commands:
-      - buildctl-daemonless.sh build --progress plain
+      - sudo buildctl-daemonless.sh build --progress plain
         --output type=image,name=registry.swerik.dev/youtubedownloader/shared:builder,push=true
         --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:builder
         --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:latest
