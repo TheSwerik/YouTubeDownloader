@@ -19,7 +19,7 @@ steps:
       - name: dockersock
         path: /var/run/docker.sock
     commands:
-      - sudo buildctl build --progress plain
+      - buildctl build --progress plain
         --output type=image,name=registry.swerik.dev/youtubedownloader/shared:builder,push=true
         --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:builder
         --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:latest
