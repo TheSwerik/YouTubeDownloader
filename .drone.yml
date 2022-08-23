@@ -20,6 +20,7 @@ steps:
         - registry.swerik.dev/youtubedownloader/shared:builder
         - registry.swerik.dev/youtubedownloader/shared:latest
       tags: builder
+      target: tester
       username:
         from_secret: REGISTRY_USERNAME
       password:
@@ -59,6 +60,7 @@ steps:
         - registry.swerik.dev/youtubedownloader/frontend:builder
         - registry.swerik.dev/youtubedownloader/frontend:latest
       tags: builder
+      target: tester
       username:
         from_secret: REGISTRY_USERNAME
       password:
@@ -91,6 +93,7 @@ steps:
         - registry.swerik.dev/youtubedownloader/shared:latest
         - registry.swerik.dev/youtubedownloader/shared:builder
       tags: latest
+      target: final
       username:
         from_secret: REGISTRY_USERNAME
       password:
@@ -132,6 +135,7 @@ steps:
         - registry.swerik.dev/youtubedownloader/frontend:latest
         - registry.swerik.dev/youtubedownloader/frontend:builder
       tags: latest
+      target: final
       username:
         from_secret: REGISTRY_USERNAME
       password:

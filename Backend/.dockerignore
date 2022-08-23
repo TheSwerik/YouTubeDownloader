@@ -22,5 +22,7 @@
 **/out
 **/secrets.dev.yaml
 **/values.dev.yaml
+**/.drone.yml
+**/docker-compose.yml
 LICENSE
 README.md
