@@ -31,6 +31,7 @@ steps:
       repo: registry.swerik.dev/youtubedownloader/backend
       cache_from: registry.swerik.dev/youtubedownloader/backend:latest
       tags: latest
+      target: final
       username:
         from_secret: REGISTRY_USERNAME
       password:
