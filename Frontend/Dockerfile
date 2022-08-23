@@ -27,7 +27,7 @@ RUN chmod -R 555 /scripts
 
 FROM file-loader as base-files
 COPY --from=registry.swerik.dev/youtubedownloader/shared /build/publish ./packages
-COPY Backend.csproj .
+COPY Frontend.csproj .
 RUN /scripts/clean-files-for-caching.sh .
 
 #########################################################################
