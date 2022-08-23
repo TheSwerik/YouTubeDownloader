@@ -10,9 +10,9 @@ trigger:
     - pull_request
 steps:
   - name: build shared lib1
-    image: moby/buildkit
+    image: moby/buildkit:master-rootless
     commands:
-      - buildctl build --progress plain
+      - buildctl-daemonless.sh build --progress plain
         --output type=image,name=registry.swerik.dev/youtubedownloader/shared:builder,push=true
         --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:builder
         --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:latest
