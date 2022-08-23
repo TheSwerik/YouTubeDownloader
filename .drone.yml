@@ -10,10 +10,9 @@ trigger:
     - pull_request
 steps:
   - name: build shared lib1
-    image: plugins/docker
+    image: moby/buildkit
     commands:
-      - docker version
-      - docker build .
+      - buildctl build --help
       
   - name: build shared lib
     image: plugins/docker
