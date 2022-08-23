@@ -21,7 +21,9 @@ steps:
         --local context=Shared
         --local dockerfile=Shared
         --opt target=tester
-      
+    environment:
+      BUILDKITD_FLAGS: --oci-worker-no-process-sandbox
+  
   - name: build shared lib
     image: plugins/docker
     settings:
