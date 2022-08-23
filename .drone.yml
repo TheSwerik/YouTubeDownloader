@@ -5,6 +5,78 @@ platform:
   os: linux
   arch: arm64
 trigger:
+  event:
+    - push
+    - pull_request
+steps:
+  - name: build shared lib
+    image: plugins/docker
+    settings:
+      dockerfile: Shared/Dockerfile
+      context: Shared
+      registry: registry.swerik.dev
+      repo: registry.swerik.dev/youtubedownloader/shared
+      cache_from:
+        - registry.swerik.dev/youtubedownloader/shared:builder
+        - registry.swerik.dev/youtubedownloader/shared:latest
+      tags: builder
+      username:
+        from_secret: REGISTRY_USERNAME
+      password:
+        from_secret: REGISTRY_PASSWORD
+    environment:
+      DOCKER_BUILDKIT: 1
+
+  - name: build backend
+    image: plugins/docker
+    settings:
+      dockerfile: Backend/Dockerfile
+      context: Backend
+      registry: registry.swerik.dev
+      repo: registry.swerik.dev/youtubedownloader/backend
+      cache_from:
+        - registry.swerik.dev/youtubedownloader/backend:builder
+        - registry.swerik.dev/youtubedownloader/backend:latest
+      tags: builder
+      target: tester
+      username:
+        from_secret: REGISTRY_USERNAME
+      password:
+        from_secret: REGISTRY_PASSWORD
+    depends_on:
+      - build shared lib
+    environment:
+      DOCKER_BUILDKIT: 1
+
+  - name: build frontend
+    image: plugins/docker
+    settings:
+      dockerfile: Frontend/Dockerfile
+      context: Frontend
+      registry: registry.swerik.dev
+      repo: registry.swerik.dev/youtubedownloader/frontend
+      cache_from:
+        - registry.swerik.dev/youtubedownloader/frontend:builder
+        - registry.swerik.dev/youtubedownloader/frontend:latest
+      tags: builder
+      username:
+        from_secret: REGISTRY_USERNAME
+      password:
+        from_secret: REGISTRY_PASSWORD
+    depends_on:
+      - build shared lib
+    environment:
+      DOCKER_BUILDKIT: 1
+---
+kind: pipeline
+type: docker
+name: build Deploy Images
+depends_on:
+  - build
+platform:
+  os: linux
+  arch: arm64
+trigger:
   branch:
     - main
 steps:
@@ -15,7 +87,9 @@ steps:
       context: Shared
       registry: registry.swerik.dev
       repo: registry.swerik.dev/youtubedownloader/shared
-      cache_from: registry.swerik.dev/youtubedownloader/shared:latest
+      cache_from:
+        - registry.swerik.dev/youtubedownloader/shared:latest
+        - registry.swerik.dev/youtubedownloader/shared:builder
       tags: latest
       username:
         from_secret: REGISTRY_USERNAME
@@ -29,7 +103,9 @@ steps:
       context: Backend
       registry: registry.swerik.dev
       repo: registry.swerik.dev/youtubedownloader/backend
-      cache_from: registry.swerik.dev/youtubedownloader/backend:latest
+      cache_from:
+        - registry.swerik.dev/youtubedownloader/backend:latest
+        - registry.swerik.dev/youtubedownloader/backend:builder
       tags: latest
       target: final
       build_args:
@@ -52,7 +128,9 @@ steps:
       context: Frontend
       registry: registry.swerik.dev
       repo: registry.swerik.dev/youtubedownloader/frontend
-      cache_from: registry.swerik.dev/youtubedownloader/frontend:latest
+      cache_from:
+        - registry.swerik.dev/youtubedownloader/frontend:latest
+        - registry.swerik.dev/youtubedownloader/frontend:builder
       tags: latest
       username:
         from_secret: REGISTRY_USERNAME
@@ -65,7 +143,7 @@ kind: pipeline
 type: ssh
 name: Deploy
 depends_on:
-  - build
+  - build Deploy Images
 platform:
   os: linux
   arch: arm64
@@ -82,8 +160,7 @@ steps:
   - name: docker login & Deploy
     commands:
       - docker --config /home/drone/.docker login localhost:5000 -u $USERNAME -p $PASSWORD
-      - docker --config /home/drone/.docker pull registry.swerik.dev/youtubedownloader/frontend
-      - docker --config /home/drone/.docker compose up -d
+      - docker --config /home/drone/.docker compose up -d --pull always
     environment:
       USERNAME:
         from_secret: REGISTRY_USERNAME
