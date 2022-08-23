@@ -12,14 +12,14 @@ steps:
   - name: build shared lib1
     image: moby/buildkit
     commands:
-      - buildctl build --progress plain \
-        --output type=image,name=registry.swerik.dev/youtubedownloader/shared:builder,push=true \
-        --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:builder \
-        --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:latest \
-        --export-cache type=inline \
-        --frontend=dockerfile.v0 \
-        --local context=. \
-        --local dockerfile=. \
+      - buildctl build --progress plain
+        --output type=image,name=registry.swerik.dev/youtubedownloader/shared:builder,push=true
+        --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:builder
+        --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:latest
+        --export-cache type=inline
+        --frontend=dockerfile.v0
+        --local context=Shared
+        --local dockerfile=Shared/Dockerfile
         --opt target=tester
       
   - name: build shared lib
