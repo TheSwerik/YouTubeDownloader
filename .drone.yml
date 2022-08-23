@@ -32,6 +32,10 @@ steps:
       cache_from: registry.swerik.dev/youtubedownloader/backend:latest
       tags: latest
       target: final
+      build_args:
+        DOCKER_BUILDKIT: 1
+      build_args_from_env:
+        DOCKER_BUILDKIT: 1
       username:
         from_secret: REGISTRY_USERNAME
       password:
