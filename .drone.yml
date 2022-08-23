@@ -38,6 +38,8 @@ steps:
         from_secret: REGISTRY_PASSWORD
     depends_on:
       - build shared lib
+    environment:
+      DOCKER_BUILDKIT: 1
 
   - name: build frontend
     image: plugins/docker
