@@ -8,16 +8,9 @@ trigger:
   event:
     - push
     - pull_request
-volumes:
-  - name: dockersock
-    host:
-      path: /var/run/docker.sock
 steps:
   - name: build shared lib1
     image: moby/buildkit
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
     commands:
       - buildctl build --progress plain
         --output type=image,name=registry.swerik.dev/youtubedownloader/shared:builder,push=true
