@@ -22,7 +22,7 @@ steps:
         --local dockerfile=Shared
         --opt target=tester
     environment:
-      BUILDKITD_FLAGS: --oci-worker-no-process-sandbox
+      BUILDCTL_CONNECT_RETRIES_MAX: 100
   
   - name: build shared lib
     image: plugins/docker
