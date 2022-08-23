@@ -19,7 +19,7 @@ steps:
         --export-cache type=inline
         --frontend=dockerfile.v0
         --local context=Shared
-        --local dockerfile=Shared/Dockerfile
+        --local dockerfile=Shared
         --opt target=tester
       
   - name: build shared lib
