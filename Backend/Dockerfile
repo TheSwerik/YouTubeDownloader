@@ -1,4 +1,4 @@
-﻿# syntax=docker.io/docker/dockerfile-upstream:1.4.3
+﻿# syntax=docker/dockerfile:1.4.3
 
 FROM alpine:3.12.0 as file-loader
 WORKDIR /data
