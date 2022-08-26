@@ -28,7 +28,7 @@ steps:
       build_args: 
        - BUILDKIT_INLINE_CACHE=1
     environment:
-      - DOCKER_BUILDKIT=1
+      - DOCKER_BUILDKIT: 1
 
   - name: build backend
     image: plugins/docker
