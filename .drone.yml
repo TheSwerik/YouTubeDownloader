@@ -40,8 +40,7 @@ steps:
         from_secret: REGISTRY_USERNAME
       password:
         from_secret: REGISTRY_PASSWORD
-      build_args:
-        BUILDKIT_INLINE_CACHE: 1
+      build_args: BUILDKIT_INLINE_CACHE=1
     environment:
       DOCKER_BUILDKIT: 1
 
