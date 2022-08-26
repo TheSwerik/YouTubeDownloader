@@ -8,22 +8,7 @@ trigger:
   event:
     - push
     - pull_request
-steps:
-  - name: build shared lib1
-    image: moby/buildkit:master-rootless
-    commands:
-      - buildctl-daemonless.sh build --progress plain
-        --output type=image,name=registry.swerik.dev/youtubedownloader/shared:builder,push=true
-        --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:builder
-        --import-cache type=registry,ref=registry.swerik.dev/youtubedownloader/shared:latest
-        --export-cache type=inline
-        --frontend=dockerfile.v0
-        --local context=Shared
-        --local dockerfile=Shared
-        --opt target=tester
-    environment:
-      BUILDCTL_CONNECT_RETRIES_MAX: 100
-  
+steps:  
   - name: build shared lib
     image: plugins/docker
     settings:
@@ -40,9 +25,10 @@ steps:
         from_secret: REGISTRY_USERNAME
       password:
         from_secret: REGISTRY_PASSWORD
-      build_args: BUILDKIT_INLINE_CACHE=1
+      build_args: 
+       - BUILDKIT_INLINE_CACHE=1
     environment:
-      DOCKER_BUILDKIT: 1
+      - DOCKER_BUILDKIT=1
 
   - name: build backend
     image: plugins/docker
