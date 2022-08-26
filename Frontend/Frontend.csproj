@@ -20,14 +20,9 @@
         <Folder Include="wwwroot\css\bootstrap"/>
     </ItemGroup>
 
-    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <ItemGroup>
+        <!--TODO use .dll-->
         <ProjectReference Include="..\Shared\Shared.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(Configuration)' == 'Release'">
-        <Reference Include="Shared">
-            <HintPath>/app/build/wwwroot/_framework/Shared.dll</HintPath>
-        </Reference>
     </ItemGroup>
 
     <ItemGroup>
