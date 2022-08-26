@@ -46,6 +46,8 @@ steps:
         from_secret: REGISTRY_USERNAME
       password:
         from_secret: REGISTRY_PASSWORD
+      build_args:
+        - BUILDKIT_INLINE_CACHE=1
     depends_on:
       - build shared lib
     environment:
@@ -67,6 +69,8 @@ steps:
         from_secret: REGISTRY_USERNAME
       password:
         from_secret: REGISTRY_PASSWORD
+      build_args:
+        - BUILDKIT_INLINE_CACHE=1
     depends_on:
       - build shared lib
     environment:
@@ -100,6 +104,10 @@ steps:
         from_secret: REGISTRY_USERNAME
       password:
         from_secret: REGISTRY_PASSWORD
+      build_args:
+        - BUILDKIT_INLINE_CACHE=1
+    environment:
+      DOCKER_BUILDKIT: 1
 
   - name: build backend
     image: plugins/docker
@@ -113,14 +121,12 @@ steps:
         - registry.swerik.dev/youtubedownloader/backend:builder
       tags: latest
       target: final
-      build_args:
-        DOCKER_BUILDKIT: 1
-      build_args_from_env:
-        DOCKER_BUILDKIT: 1
       username:
         from_secret: REGISTRY_USERNAME
       password:
         from_secret: REGISTRY_PASSWORD
+      build_args:
+        - BUILDKIT_INLINE_CACHE=1
     depends_on:
       - build shared lib
     environment:
@@ -142,8 +148,12 @@ steps:
         from_secret: REGISTRY_USERNAME
       password:
         from_secret: REGISTRY_PASSWORD
+      build_args:
+        - BUILDKIT_INLINE_CACHE=1
     depends_on:
       - build shared lib
+    environment:
+      DOCKER_BUILDKIT: 1
 ---
 kind: pipeline
 type: ssh
