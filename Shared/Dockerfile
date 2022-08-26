@@ -28,13 +28,6 @@ RUN dotnet restore
 
 #########################################################################
 
-FROM dependencyfetcher as tester
-WORKDIR /build
-COPY --from=source-files /data .
-RUN dotnet test
-
-#########################################################################
-
 FROM dependencyfetcher as final
 COPY --from=source-files /data .
 RUN dotnet publish -c Release -o /build/publish

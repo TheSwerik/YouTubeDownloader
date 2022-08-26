@@ -17,10 +17,9 @@ steps:
       registry: registry.swerik.dev
       repo: registry.swerik.dev/youtubedownloader/shared
       cache_from:
-        - registry.swerik.dev/youtubedownloader/shared:builder
         - registry.swerik.dev/youtubedownloader/shared:latest
-      tags: builder
-      target: tester
+      tags: latest
+      target: final
       username:
         from_secret: REGISTRY_USERNAME
       password:
@@ -88,27 +87,6 @@ trigger:
   branch:
     - main
 steps:
-  - name: build shared lib
-    image: plugins/docker
-    settings:
-      dockerfile: Shared/Dockerfile
-      context: Shared
-      registry: registry.swerik.dev
-      repo: registry.swerik.dev/youtubedownloader/shared
-      cache_from:
-        - registry.swerik.dev/youtubedownloader/shared:latest
-        - registry.swerik.dev/youtubedownloader/shared:builder
-      tags: latest
-      target: final
-      username:
-        from_secret: REGISTRY_USERNAME
-      password:
-        from_secret: REGISTRY_PASSWORD
-      build_args:
-        - BUILDKIT_INLINE_CACHE=1
-    environment:
-      DOCKER_BUILDKIT: 1
-
   - name: build backend
     image: plugins/docker
     settings:
