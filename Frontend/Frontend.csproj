@@ -59,4 +59,8 @@
         </ServiceWorker>
     </ItemGroup>
 
+    <ItemGroup>
+        <_ContentIncludedByDefault Remove="packages\Shared.deps.json"/>
+    </ItemGroup>
+
 </Project>
