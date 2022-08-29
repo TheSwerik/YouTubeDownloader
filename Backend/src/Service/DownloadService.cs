@@ -18,7 +18,7 @@ public class DownloadService
         var processStartInfo = new ProcessStartInfo
                                {
                                    WindowStyle = ProcessWindowStyle.Hidden,
-                                   FileName = "yt-dlp.exe",
+                                   FileName = "yt-dlp",
                                    Arguments =
                                        $"--parse-metadata \"%(uploader|)s:%(meta_artist)s\" --format bestaudio --add-metadata --extract-audio --audio-quality 0 --audio-format best {url}",
                                    RedirectStandardOutput = true,
