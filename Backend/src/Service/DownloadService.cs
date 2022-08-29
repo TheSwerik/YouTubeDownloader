@@ -8,7 +8,9 @@ public class DownloadService
     private readonly string[] _arguments =
     {
         "--update",
+        #if DEBUG
         "--ffmpeg-location \"C:/Program Files/ffmpeg/bin\"",
+        #endif
         "--parse-metadata \"%(uploader|)s:%(meta_artist)s\"",
         "--embed-metadata",
         "--embed-thumbnail",
