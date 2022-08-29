@@ -33,6 +33,11 @@ public class DownloadController : ControllerBase
     public IActionResult Get(string url)
     {
         var guid = Guid.NewGuid().ToString();
+        Response.OnCompleted(() =>
+                             {
+                                 Directory.Delete(guid, true);
+                                 return Task.CompletedTask;
+                             });
         var filePath = _downloadService.DownloadYouTubeAudio(url, guid);
         var fileStream = new FileStream(
             filePath,
@@ -42,11 +47,6 @@ public class DownloadController : ControllerBase
             4096,
             FileOptions.DeleteOnClose
         );
-        Response.OnCompleted(() =>
-                             {
-                                 Directory.Delete(guid, true);
-                                 return Task.CompletedTask;
-                             });
         return File(fileStream, "audio/mpeg", Path.GetFileName(filePath));
     }
 }

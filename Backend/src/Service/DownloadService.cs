@@ -9,8 +9,6 @@ public class DownloadService
     {
         "--update",
         "--ffmpeg-location \"C:/Program Files/ffmpeg/bin\"",
-        "--parse-metadata \"%(uploader|)s:%(meta_artist)s\"",
-        "--add-metadata",
         "--embed-metadata",
         "--embed-thumbnail",
         "--extract-audio",
@@ -40,13 +38,14 @@ public class DownloadService
 
         var process = new Process { StartInfo = processStartInfo };
         process.Start();
+        process.WaitForExit();
 
         var error = process.StandardError.ReadToEnd();
         var output = process.StandardOutput.ReadToEnd();
 
         if (error.Length > 0) _logger.LogError("{Error}", error);
 
-        const string searchText = "[ExtractAudio] Destination:";
+        const string searchText = "[download] Destination:";
         var result = output.Split("\n").FirstOrDefault(l => l.StartsWith(searchText));
         if (result is null) throw new YouTubeVideoDownloadException(url);
         return $"{guid}/{result[searchText.Length..].Trim()}";
