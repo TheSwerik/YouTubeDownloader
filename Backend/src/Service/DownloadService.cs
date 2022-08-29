@@ -1,29 +1,41 @@
 ﻿using System.Diagnostics;
 using Backend.Service.Exception;
-using Backend.Util;
 
 namespace Backend.Service;
 
 public class DownloadService
 {
+    private readonly string[] _arguments =
+    {
+        "--update",
+        "--ffmpeg-location \"C:/Program Files/ffmpeg/bin\"",
+        "--parse-metadata \"%(uploader|)s:%(meta_artist)s\"",
+        "--add-metadata",
+        "--embed-metadata",
+        "--embed-thumbnail",
+        "--extract-audio",
+        "--format bestaudio[ext=m4a]",
+        "--audio-format m4a",
+        "--audio-quality 0",
+        $"-o \"%(title)s {Guid.NewGuid()}.%(ext)s\""
+    };
+
     private readonly ILogger<DownloadService> _logger;
 
     public DownloadService(ILogger<DownloadService> logger) { _logger = logger; }
 
-    public string DownloadYouTubeAudio(string url)
+    public string DownloadYouTubeAudio(string url, string guid)
     {
-        if (url.IsVideoId()) url = $"youtu.be/{url}";
-        if (url.IsInvalidYouTubeUrl()) throw new InvalidUrlException(url);
-
+        Directory.CreateDirectory(guid);
         var processStartInfo = new ProcessStartInfo
                                {
                                    WindowStyle = ProcessWindowStyle.Hidden,
                                    FileName = "yt-dlp",
-                                   Arguments =
-                                       $"--parse-metadata \"%(uploader|)s:%(meta_artist)s\" --format bestaudio --add-metadata --extract-audio --audio-quality 0 --audio-format best {url}",
+                                   Arguments = string.Join(' ', _arguments) + $" {url}",
                                    RedirectStandardOutput = true,
                                    RedirectStandardError = true,
-                                   UseShellExecute = false
+                                   UseShellExecute = false,
+                                   WorkingDirectory = guid
                                };
 
         var process = new Process { StartInfo = processStartInfo };
@@ -37,10 +49,6 @@ public class DownloadService
         const string searchText = "[ExtractAudio] Destination:";
         var result = output.Split("\n").FirstOrDefault(l => l.StartsWith(searchText));
         if (result is null) throw new YouTubeVideoDownloadException(url);
-        result = result[searchText.Length..].Trim();
-        var newResult = $"{Guid.NewGuid()}.mp3";
-        File.Move(result, newResult);
-
-        return newResult;
+        return $"{guid}/{result[searchText.Length..].Trim()}";
     }
 }

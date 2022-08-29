@@ -32,15 +32,21 @@ public class DownloadController : ControllerBase
     [Produces("audio/mpeg", "application/json")]
     public IActionResult Get(string url)
     {
-        var path = _downloadService.DownloadYouTubeAudio(url);
+        var guid = Guid.NewGuid().ToString();
+        var filePath = _downloadService.DownloadYouTubeAudio(url, guid);
         var fileStream = new FileStream(
-            path,
+            filePath,
             FileMode.Open,
             FileAccess.Read,
             FileShare.None,
             4096,
             FileOptions.DeleteOnClose
         );
-        return File(fileStream, "audio/mpeg", Path.GetFileName(path));
+        Response.OnCompleted(() =>
+                             {
+                                 Directory.Delete(guid, true);
+                                 return Task.CompletedTask;
+                             });
+        return File(fileStream, "audio/mpeg", Path.GetFileName(filePath));
     }
 }
