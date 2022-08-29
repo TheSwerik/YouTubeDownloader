@@ -57,5 +57,5 @@ RUN apk add --no-cache curl \
 FROM base as final
 WORKDIR /app
 COPY --from=builder /build/publish .
-USER 1001:1001
+#USER 1001:1001
 ENTRYPOINT ["dotnet", "Backend.dll"]
