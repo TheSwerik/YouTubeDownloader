@@ -131,7 +131,8 @@ steps:
 
   - name: parallelism
     image: scratch
-    commands: echo finished
+    commands: 
+      - echo finished
     depends_on:
       - build backend
       - build frontend
