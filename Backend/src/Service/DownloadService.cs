@@ -9,6 +9,7 @@ public class DownloadService
     {
         "--update",
         "--ffmpeg-location \"C:/Program Files/ffmpeg/bin\"",
+        "--parse-metadata \"%(uploader|)s:%(meta_artist)s\"",
         "--embed-metadata",
         "--embed-thumbnail",
         "--extract-audio",

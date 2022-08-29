@@ -33,11 +33,7 @@ public class DownloadController : ControllerBase
     public IActionResult Get(string url)
     {
         var guid = Guid.NewGuid().ToString();
-        Response.OnCompleted(() =>
-                             {
-                                 Directory.Delete(guid, true);
-                                 return Task.CompletedTask;
-                             });
+        Response.OnCompleted(() => Task.Run(() => Directory.Delete(guid, true)));
         var filePath = _downloadService.DownloadYouTubeAudio(url, guid);
         var fileStream = new FileStream(
             filePath,
