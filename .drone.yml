@@ -130,7 +130,7 @@ steps:
       DOCKER_BUILDKIT: 1
 
   - name: parallelism
-    image: scratch
+    image: alpine
     commands: 
       - echo finished
     depends_on:
