@@ -27,7 +27,7 @@
     "action": "/index",
     "method": "GET",
     "params": {
-      "url": "url"
+      "text": "url"
     }
   }
 }
