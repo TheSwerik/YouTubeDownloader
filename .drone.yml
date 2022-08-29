@@ -128,6 +128,13 @@ steps:
         - BUILDKIT_INLINE_CACHE=1
     environment:
       DOCKER_BUILDKIT: 1
+
+  - name: parallelism
+    image: scratch
+    commands: echo finished
+    depends_on:
+      - build backend
+      - build frontend
 ---
 kind: pipeline
 type: ssh
