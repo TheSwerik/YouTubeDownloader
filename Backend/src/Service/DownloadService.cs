@@ -11,6 +11,7 @@ public class DownloadService
         #if DEBUG
         "--ffmpeg-location \"C:/Program Files/ffmpeg/bin\"",
         #endif
+        "--no-playlist",
         "--parse-metadata \"%(uploader|)s:%(meta_artist)s\"",
         "--embed-metadata",
         "--embed-thumbnail",
