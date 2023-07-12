@@ -1,6 +1,6 @@
 ﻿# syntax=docker/dockerfile:1.4.3
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine as builder
+FROM mcr.microsoft.com/dotnet/sdk:6.0 as builder
 WORKDIR /build
 COPY ../../. .
 RUN dotnet publish -c Release -o /build/publish Backend/Backend.csproj
