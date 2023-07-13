@@ -7,7 +7,7 @@ RUN dotnet publish -c Release -o /build/publish Backend/Backend.csproj
 
 #########################################################################
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS final
 WORKDIR /app
 EXPOSE 80
 RUN apk add --no-cache curl \
