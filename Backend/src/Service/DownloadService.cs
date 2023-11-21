@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 using Backend.Service.Exception;
 
 namespace Backend.Service;
@@ -11,7 +12,6 @@ public class DownloadService
         #if DEBUG
         "--ffmpeg-location \"C:/Program Files/ffmpeg/bin\"",
         #endif
-        "--no-playlist",
         "--parse-metadata \"%(uploader|)s:%(meta_artist)s\"",
         "--embed-metadata",
         "--embed-thumbnail",
@@ -26,18 +26,22 @@ public class DownloadService
 
     public DownloadService(ILogger<DownloadService> logger) { _logger = logger; }
 
-    public string DownloadYouTubeAudio(string url, string guid)
+    public string? DownloadYouTubeAudio(string url, string guid, int index = 0)
     {
         Directory.CreateDirectory(guid);
         var processStartInfo = new ProcessStartInfo
                                {
                                    WindowStyle = ProcessWindowStyle.Hidden,
                                    FileName = "yt-dlp",
-                                   Arguments = string.Join(' ', _arguments) + $" {url}",
+                                   Arguments = string.Join(' ', _arguments)
+                                               + (index != 0 ? $" -I {index}" : " --no-playlist")
+                                               + $" {url}",
                                    RedirectStandardOutput = true,
                                    RedirectStandardError = true,
                                    UseShellExecute = false,
-                                   WorkingDirectory = guid
+                                   WorkingDirectory = guid,
+                                   StandardOutputEncoding = new UTF8Encoding(),
+                                   StandardErrorEncoding = new UTF8Encoding()
                                };
 
         var process = new Process { StartInfo = processStartInfo };
@@ -48,6 +52,13 @@ public class DownloadService
         var output = process.StandardOutput.ReadToEnd();
 
         if (error.Length > 0) _logger.LogError("{Error}", error);
+
+        if (index != 0)
+        {
+            const string searchTextNoDownloads = "Downloading 0 items of";
+            var foundLine = output.Split("\n").FirstOrDefault(l => l.Contains(searchTextNoDownloads));
+            if (foundLine is not null) return null;
+        }
 
         const string searchText = "[download] Destination:";
         var result = output.Split("\n").FirstOrDefault(l => l.StartsWith(searchText));

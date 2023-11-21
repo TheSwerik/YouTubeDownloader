@@ -17,15 +17,15 @@ public class DownloadService : Service
 
     private IJSRuntime Js { get; }
 
-    public async Task DownloadSong(string url)
+    public async Task<bool> DownloadSong(string url, int index = 0)
     {
-        var response = await GetAsync($"download/song?url={url}");
+        var response = await GetAsync($"download/song?url={url}&index={index}");
 
         if (!response.IsSuccessStatusCode)
         {
             var exceptionBody = await response.Content.GetExceptionBody();
             ToastService.ShowError(ExceptionLocalizationService[exceptionBody.Type, exceptionBody.Body!]);
-            return;
+            return false;
         }
 
         var bytes = await response.Content.ReadAsByteArrayAsync();
@@ -37,5 +37,6 @@ public class DownloadService : Service
             streamRef
         );
         ToastService.ShowSuccess("Erfolgreich heruntergeladen.");
+        return true;
     }
 }

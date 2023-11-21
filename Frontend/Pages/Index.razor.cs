@@ -9,6 +9,7 @@ public partial class Index
 
     // private string Url { get; set; } = "";
     private bool IsLoading { get; set; }
+    private bool DownloadEntirePlaylist { get; set; }
     [Inject] private DownloadService DownloadService { get; set; } = null!;
     protected override Task OnInitializedAsync() { return Submit(); }
     protected override Task OnParametersSetAsync() { return Submit(); }
@@ -17,7 +18,11 @@ public partial class Index
     {
         if (Url is null) return;
         IsLoading = true;
-        await DownloadService.DownloadSong(Url);
+
+        if (!DownloadEntirePlaylist) await DownloadService.DownloadSong(Url); //download only the one song
+        for (var i = 1; DownloadEntirePlaylist; i++)
+            DownloadEntirePlaylist = await DownloadService.DownloadSong(Url, i);
+
         IsLoading = false;
         Url = null;
         StateHasChanged();

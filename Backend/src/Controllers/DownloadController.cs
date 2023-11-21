@@ -19,6 +19,7 @@ public class DownloadController : ControllerBase
 
     /// <summary>Downloads a YouTube-Video as a MP3 File.</summary>
     /// <param name="url">The URL for the YouTube-Video to be downloaded.</param>
+    /// <param name="index">The optional index of the video in the playlist.</param>
     /// <exception cref="Backend.Service.Exception.InvalidUrlException">400 if the URL is not a valid YouTube-URL.</exception>
     /// <exception cref="YouTubeVideoDownloadException">400 if the video cannot be downloaded.</exception>
     /// <returns>The downloaded MP3-File with content-type "audio/mpeg".</returns>
@@ -30,11 +31,12 @@ public class DownloadController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Produces("audio/mpeg", "application/json")]
-    public IActionResult Get(string url)
+    public IActionResult Get(string url, int index = 0)
     {
         var guid = Guid.NewGuid().ToString();
         Response.OnCompleted(() => Task.Run(() => Directory.Delete(guid, true)));
-        var filePath = _downloadService.DownloadYouTubeAudio(url, guid);
+        var filePath = _downloadService.DownloadYouTubeAudio(url, guid, index);
+        if (filePath is null) return NotFound();
         var fileStream = new FileStream(
             filePath,
             FileMode.Open,
