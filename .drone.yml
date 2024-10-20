@@ -16,8 +16,8 @@ steps:
 kind: pipeline
 type: docker
 name: build Deploy Images
-depends_on:
-  - test
+#depends_on:
+#  - test
 platform:
   os: linux
   arch: arm64
