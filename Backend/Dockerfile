@@ -1,13 +1,13 @@
 ﻿# syntax=docker/dockerfile:1.4.3
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 as builder
+FROM mcr.microsoft.com/dotnet/sdk:8.0 as builder
 WORKDIR /build
 COPY ../../. .
 RUN dotnet publish -c Release -o /build/publish Backend/Backend.csproj
 
 #########################################################################
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS final
 WORKDIR /app
 EXPOSE 80
 RUN apk add --no-cache curl \
