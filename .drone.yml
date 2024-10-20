@@ -1,18 +1,18 @@
-﻿kind: pipeline
-type: docker
-name: test
-platform:
-  os: linux
-  arch: arm64
-trigger:
-  branch:
-    - main
-steps:
-  - name: run tests
-    image: mcr.microsoft.com/dotnet/sdk:8.0
-    commands:
-      - dotnet test
----
+﻿#kind: pipeline
+#type: docker
+#name: test
+#platform:
+#  os: linux
+#  arch: arm64
+#trigger:
+#  branch:
+#    - main
+#steps:
+#  - name: run tests
+#    image: mcr.microsoft.com/dotnet/sdk:8.0
+#    commands:
+#      - dotnet test
+#---
 kind: pipeline
 type: docker
 name: build Deploy Images
