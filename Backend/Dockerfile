@@ -16,7 +16,7 @@ RUN apk add --no-cache icu-libs
 RUN apk add --no-cache krb5-libs
 RUN apk add --no-cache libgcc
 RUN apk add --no-cache libintl
-RUN apk add --no-cache libssl1.1
+RUN apk add --no-cache libssl3
 RUN apk add --no-cache libstdc++
 RUN apk add --no-cache zlib
 RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
