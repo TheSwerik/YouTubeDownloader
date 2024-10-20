@@ -7,6 +7,7 @@ platform:
 trigger:
   branch:
     - main
+    - test/old-commit
 steps:
   - name: run tests
     image: mcr.microsoft.com/dotnet/sdk:6.0
@@ -24,6 +25,7 @@ platform:
 trigger:
   branch:
     - main
+    - test/old-commit
 steps:
   - name: build Backend
     image: plugins/docker
@@ -74,6 +76,7 @@ platform:
 trigger:
   branch:
     - main
+    - test/old-commit
 server:
   host: erikpi
   user:
