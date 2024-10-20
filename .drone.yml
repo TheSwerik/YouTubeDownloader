@@ -24,6 +24,7 @@ platform:
 trigger:
   branch:
     - main
+    - fix/update-dotnet
 steps:
   - name: build Backend
     image: plugins/docker
