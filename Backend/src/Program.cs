@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using Backend.Service;
 
 Console.OutputEncoding = Encoding.UTF8;
 
@@ -13,6 +14,15 @@ builder.Services.AddSwaggerGen(options =>
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
+
+var ffmpegPath = builder.Configuration["FFMPEG_PATH"];
+if (ffmpegPath == null) throw new Exception("FFMPEG_PATH is missing"); //TODO exceptions
+
+#region Services
+
+builder.Services.AddSingleton<DownloadService>();
+
+#endregion
 
 var app = builder.Build();
 
