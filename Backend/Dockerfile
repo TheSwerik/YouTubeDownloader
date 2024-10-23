@@ -9,7 +9,7 @@ RUN dotnet publish -c Release -o /build/publish Backend/Backend.csproj
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS final
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8080
 RUN apk add --no-cache curl \
  && apk add --no-cache ffmpeg \
  && apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib \
