@@ -17,6 +17,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(
+    policyBuilder =>
+    {
+        policyBuilder.AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader()
+                     .WithExposedHeaders("*");
+    }
+);
+
 app.UseAuthorization();
 
 app.MapControllers();
