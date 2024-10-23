@@ -9,9 +9,9 @@ public class DownloadService
     private readonly string[] _arguments =
     {
         "--update",
-        #if DEBUG
+#if DEBUG
         "--ffmpeg-location \"C:/Program Files/ffmpeg/bin\"",
-        #endif
+#endif
         "--parse-metadata \"%(uploader|)s:%(meta_artist)s\"",
         "--embed-metadata",
         "--embed-thumbnail",
@@ -24,32 +24,34 @@ public class DownloadService
 
     private readonly ILogger<DownloadService> _logger;
 
-    public DownloadService(ILogger<DownloadService> logger) { _logger = logger; }
+    public DownloadService(ILogger<DownloadService> logger)
+    {
+        _logger = logger;
+    }
 
-    public string? DownloadYouTubeAudio(string url, string guid, int index = 0)
+    public async Task<string?> DownloadYouTubeAudio(string url, string guid, int index = 0)
     {
         Directory.CreateDirectory(guid);
         var processStartInfo = new ProcessStartInfo
-                               {
-                                   WindowStyle = ProcessWindowStyle.Hidden,
-                                   FileName = "yt-dlp",
-                                   Arguments = string.Join(' ', _arguments)
-                                               + (index != 0 ? $" -I {index}" : " --no-playlist")
-                                               + $" {url}",
-                                   RedirectStandardOutput = true,
-                                   RedirectStandardError = true,
-                                   UseShellExecute = false,
-                                   WorkingDirectory = guid,
-                                   StandardOutputEncoding = new UTF8Encoding(),
-                                   StandardErrorEncoding = new UTF8Encoding()
-                               };
+        {
+            WindowStyle = ProcessWindowStyle.Hidden,
+            FileName = "yt-dlp",
+            Arguments = string.Join(' ', _arguments) + (index != 0 ? $" -I {index}" : " --no-playlist") + $" {url}",
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+            WorkingDirectory = guid,
+            StandardOutputEncoding = new UTF8Encoding(),
+            StandardErrorEncoding = new UTF8Encoding()
+        };
 
-        var process = new Process { StartInfo = processStartInfo };
+        using var process = new Process();
+        process.StartInfo = processStartInfo;
         process.Start();
-        process.WaitForExit();
+        await process.WaitForExitAsync();
 
-        var error = process.StandardError.ReadToEnd();
-        var output = process.StandardOutput.ReadToEnd();
+        var error = await process.StandardError.ReadToEndAsync();
+        var output = await process.StandardOutput.ReadToEndAsync();
 
         if (error.Length > 0) _logger.LogError("{Error}", error);
 

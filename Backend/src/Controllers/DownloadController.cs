@@ -31,11 +31,11 @@ public class DownloadController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [Produces("audio/mpeg", "application/json")]
-    public IActionResult Get(string url, int index = 0)
+    public async Task<IActionResult> Get(string url, int index = 0)
     {
         var guid = Guid.NewGuid().ToString();
         Response.OnCompleted(() => Task.Run(() => Directory.Delete(guid, true)));
-        var filePath = _downloadService.DownloadYouTubeAudio(url, guid, index);
+        var filePath = await _downloadService.DownloadYouTubeAudio(url, guid, index);
         if (filePath is null) return NotFound();
         var fileStream = new FileStream(
             filePath,
