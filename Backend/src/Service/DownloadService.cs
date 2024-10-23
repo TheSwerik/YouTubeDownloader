@@ -31,7 +31,7 @@ public class DownloadService
 
     public async Task<string?> DownloadYouTubeAudio(string url, string guid, int index = 0)
     {
-        Directory.CreateDirectory(guid);
+        var dir = Directory.CreateDirectory(guid);
         var processStartInfo = new ProcessStartInfo
         {
             WindowStyle = ProcessWindowStyle.Hidden,
@@ -62,9 +62,8 @@ public class DownloadService
             if (foundLine is not null) return null;
         }
 
-        const string searchText = "[download] Destination:";
-        var result = output.Split("\n").FirstOrDefault(l => l.StartsWith(searchText));
-        if (result is null) throw new YouTubeVideoDownloadException(url);
-        return $"{guid}/{result[searchText.Length..].Trim()}";
+        var files = dir.GetFiles();
+        if (files.Length == 0) throw new YouTubeVideoDownloadException(url);
+        return files[0].FullName;
     }
 }
