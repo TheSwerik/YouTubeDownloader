@@ -11,19 +11,18 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services
-       .AddLocalization()
-       .AddScoped(_ => new HttpClient
-                       {
-                           BaseAddress = new Uri(
-                               builder.HostEnvironment.IsEnvironment("Local")
-                                   ? "http://localhost:8080"
-                                   : builder.HostEnvironment.BaseAddress + "/api/"
-                           )
-                       })
-       .AddScoped<ExceptionLocalizationService>()
-       .AddScoped<UILocalizationService>()
-       .AddScoped<DownloadService>()
-       .AddBlazoredToast();
+builder.Services.AddLocalization();
+builder.Services.AddScoped(_ => new HttpClient
+{
+    BaseAddress = new Uri(
+        builder.HostEnvironment.IsEnvironment("Local")
+            ? "http://localhost:8080"
+            : builder.HostEnvironment.BaseAddress + "/api/"
+    )
+});
+builder.Services.AddScoped<ExceptionLocalizationService>();
+builder.Services.AddScoped<UILocalizationService>();
+builder.Services.AddScoped<DownloadService>();
+builder.Services.AddBlazoredToast();
 
 builder.Build().RunAsync();
