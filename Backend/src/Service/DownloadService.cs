@@ -41,7 +41,6 @@ public class DownloadService
         {
             WindowStyle = ProcessWindowStyle.Hidden,
             FileName = "yt-dlp",
-            Arguments = string.Join(' ', _arguments) + (index != 0 ? $" -I {index}" : " --no-playlist") + $" {url}",
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
@@ -49,6 +48,11 @@ public class DownloadService
             StandardOutputEncoding = new UTF8Encoding(),
             StandardErrorEncoding = new UTF8Encoding()
         };
+
+        foreach (var argument in _arguments) processStartInfo.ArgumentList.Add(argument);
+        processStartInfo.ArgumentList.Add(index != 0 ? $"-I {index}" : "--no-playlist");
+        // The URL is added as a final, distinct argument. ArgumentList handles the escaping automatically.
+        processStartInfo.ArgumentList.Add(url);
 
         using var process = new Process();
         process.StartInfo = processStartInfo;
