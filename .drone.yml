@@ -14,7 +14,7 @@ steps:
       - dotnet test
 ---
 kind: pipeline
-type: docker
+type: ssh
 name: build Deploy Images
 depends_on:
   - test
@@ -24,43 +24,38 @@ platform:
 trigger:
   branch:
     - main
+server:
+  host: erikpi
+  user:
+    from_secret: SSH_USERNAME
+  password:
+    from_secret: SSH_PASSWORD
 steps:
   - name: build Backend
-    image: plugins/docker
-    settings:
-      dockerfile: Backend/Dockerfile
-      context: .
-      registry: registry:443
-      repo: registry:443/youtubedownloader/backend
-      tags: latest
-      insecure: true
-      username:
-        from_secret: REGISTRY_USERNAME
-      password:
-        from_secret: REGISTRY_PASSWORD
+    commands:
+      - docker --config /home/drone/.docker login localhost:5000 -u $USERNAME -p $PASSWORD
+      - docker build -t localhost:5000/youtubedownloader/backend -f Backend/Dockerfile --progress plain .
+      - docker push localhost:5000/youtubedownloader/backend:latest
     environment:
-      DOCKER_BUILDKIT: 1
+      USERNAME:
+        from_secret: REGISTRY_USERNAME
+      PASSWORD:
+        from_secret: REGISTRY_PASSWORD
 
   - name: build Frontend
-    image: plugins/docker
-    settings:
-      dockerfile: Frontend/Dockerfile
-      context: .
-      registry: registry.swerik.dev
-      repo: registry.swerik.dev/youtubedownloader/frontend
-      tags: latest
-      insecure: true
-      username:
-        from_secret: REGISTRY_USERNAME
-      password:
-        from_secret: REGISTRY_PASSWORD
+    commands:
+      - docker --config /home/drone/.docker login localhost:5000 -u $USERNAME -p $PASSWORD
+      - docker build -t localhost:5000/youtubedownloader/frontend -f Frontend/Dockerfile --progress plain .
+      - docker push localhost:5000/youtubedownloader/frontend:latest
     environment:
-      DOCKER_BUILDKIT: 1
+      USERNAME:
+        from_secret: REGISTRY_USERNAME
+      PASSWORD:
+        from_secret: REGISTRY_PASSWORD
 
   - name: parallelism
-    image: alpine
     commands:
-      - echo finished
+      - echo "parallelism successful"
     depends_on:
       - build Backend
       - build Frontend
