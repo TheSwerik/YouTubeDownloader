@@ -25,4 +25,4 @@ builder.Services.AddScoped<UILocalizationService>();
 builder.Services.AddScoped<DownloadService>();
 builder.Services.AddBlazoredToast();
 
-builder.Build().RunAsync();
+await builder.Build().RunAsync();
