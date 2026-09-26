@@ -31,8 +31,9 @@ steps:
       dockerfile: Backend/Dockerfile
       context: .
       registry: registry:443
-      repo: registry.swerik.dev/youtubedownloader/backend
+      repo: youtubedownloader/backend
       tags: latest
+      insecure: true
       username:
         from_secret: REGISTRY_USERNAME
       password:
@@ -48,6 +49,7 @@ steps:
       registry: registry:443
       repo: registry.swerik.dev/youtubedownloader/frontend
       tags: latest
+      insecure: true
       username:
         from_secret: REGISTRY_USERNAME
       password:
