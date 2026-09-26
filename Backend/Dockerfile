@@ -16,5 +16,7 @@ RUN apk add --no-cache curl \
   && apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python \
   && curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp \
   && chmod a+rx /usr/local/bin/yt-dlp
+
 COPY --from=builder /build/publish .
+ENV FFMPEG_PATH=/usr/bin/ffmpeg
 ENTRYPOINT ["dotnet", "Backend.dll"]
