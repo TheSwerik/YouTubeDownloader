@@ -5,13 +5,15 @@ namespace Backend.Service.Exception.Util;
 
 internal class HttpResponseExceptionFilter : IActionFilter, IOrderedFilter
 {
-    public void OnActionExecuting(ActionExecutingContext context) { }
+    public void OnActionExecuting(ActionExecutingContext context)
+    {
+    }
 
     public void OnActionExecuted(ActionExecutedContext context)
     {
         if (context.Exception is not YouTubeDownloaderException youtubeDownloaderException) return;
         context.Result = new ObjectResult(youtubeDownloaderException.Body)
-                         { StatusCode = youtubeDownloaderException.StatusCode };
+            { StatusCode = youtubeDownloaderException.StatusCode };
         context.ExceptionHandled = true;
     }
 
