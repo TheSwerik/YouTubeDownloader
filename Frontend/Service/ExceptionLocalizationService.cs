@@ -4,11 +4,10 @@ using ExceptionResource = Frontend.Resources.Exception;
 
 namespace Frontend.Service;
 
-public class ExceptionLocalizationService
+public class ExceptionLocalizationService(IStringLocalizer<ExceptionResource> localizer)
 {
-    public ExceptionLocalizationService(IStringLocalizer<ExceptionResource> localizer) { Localizer = localizer; }
     public string this[ExceptionType type] => Localizer[type.ToString()];
 
     public string this[ExceptionType type, params object[] parameters] => Localizer[type.ToString(), parameters];
-    private IStringLocalizer<ExceptionResource> Localizer { get; }
+    private IStringLocalizer<ExceptionResource> Localizer { get; } = localizer;
 }

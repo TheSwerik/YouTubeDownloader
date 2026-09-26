@@ -1,7 +1,12 @@
+using System;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using Backend.Service;
 using Backend.Service.Exception.Util;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 Console.OutputEncoding = Encoding.UTF8;
 
@@ -28,13 +33,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(
-    policyBuilder =>
+app.UseCors(policyBuilder =>
     {
-        policyBuilder.AllowAnyOrigin()
-                     .AllowAnyMethod()
-                     .AllowAnyHeader()
-                     .WithExposedHeaders("*");
+        // In a production environment, replace AllowAnyOrigin() with specific allowed origins.
+        if (app.Environment.IsDevelopment())
+            policyBuilder.AllowAnyOrigin()
+                         .AllowAnyMethod()
+                         .AllowAnyHeader()
+                         .WithExposedHeaders("*");
+        else
+            // Placeholder for production CORS configuration
+            policyBuilder.WithOrigins("https://yourdomain.com")
+                         .AllowAnyMethod()
+                         .AllowAnyHeader();
     }
 );
 

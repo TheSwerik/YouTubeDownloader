@@ -1,7 +1,9 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 using Shared.Exception;
 
-namespace Frontend.Service.Util;
+namespace Frontend.Util;
 
 public static class ExtensionMethods
 {

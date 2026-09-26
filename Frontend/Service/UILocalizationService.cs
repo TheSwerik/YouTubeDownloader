@@ -3,11 +3,10 @@ using Microsoft.Extensions.Localization;
 
 namespace Frontend.Service;
 
-public class UILocalizationService
+public class UILocalizationService(IStringLocalizer<UI> localizer)
 {
-    public UILocalizationService(IStringLocalizer<UI> localizer) { Localizer = localizer; }
     public string this[string key] => Localizer[key];
 
     public string this[string key, params object[] parameters] => Localizer[key, parameters];
-    private IStringLocalizer<UI> Localizer { get; }
+    private IStringLocalizer<UI> Localizer { get; } = localizer;
 }

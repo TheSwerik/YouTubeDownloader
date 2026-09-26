@@ -1,4 +1,5 @@
-﻿using Frontend.Service;
+﻿using System.Threading.Tasks;
+using Frontend.Service;
 using Microsoft.AspNetCore.Components;
 
 namespace Frontend.Pages;
