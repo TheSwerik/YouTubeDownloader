@@ -30,7 +30,7 @@ steps:
     settings:
       dockerfile: Backend/Dockerfile
       context: .
-      registry: localhost:5000
+      registry: registry:443
       repo: youtubedownloader/backend
       tags: latest
       username:
@@ -45,7 +45,7 @@ steps:
     settings:
       dockerfile: Frontend/Dockerfile
       context: .
-      registry: localhost:5000
+      registry: registry:443
       repo: youtubedownloader/frontend
       tags: latest
       username:
