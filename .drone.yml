@@ -27,31 +27,35 @@ trigger:
 steps:
   - name: build Backend
     image: plugins/docker
+    network_mode: host
     settings:
       dockerfile: Backend/Dockerfile
       context: .
-      registry: registry:443
+      registry: localhost:5000
       repo: youtubedownloader/backend
       tags: latest
       username:
         from_secret: REGISTRY_USERNAME
       password:
         from_secret: REGISTRY_PASSWORD
+      insecure: true
     environment:
       DOCKER_BUILDKIT: 1
 
   - name: build Frontend
     image: plugins/docker
+    network_mode: host
     settings:
       dockerfile: Frontend/Dockerfile
       context: .
-      registry: registry:443
+      registry: localhost:5000
       repo: youtubedownloader/frontend
       tags: latest
       username:
         from_secret: REGISTRY_USERNAME
       password:
         from_secret: REGISTRY_PASSWORD
+      insecure: true
     environment:
       DOCKER_BUILDKIT: 1
 
