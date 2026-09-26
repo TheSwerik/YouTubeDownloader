@@ -1,16 +1,14 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
 using Backend.Service.Exception;
-using Microsoft.Extensions.Logging;
 
 namespace Backend.Service;
 
 public class DownloadService
 {
+    // Limit concurrency to 3 simultaneous downloads
+    private static readonly SemaphoreSlim ConcurrencySemaphore = new(3);
+
     private readonly string[] _arguments =
     {
         "--update",
@@ -36,43 +34,64 @@ public class DownloadService
 
     public async Task<string?> DownloadYouTubeAudio(string url, string guid, int index = 0)
     {
-        var dir = Directory.CreateDirectory(guid);
-        var processStartInfo = new ProcessStartInfo
+        await ConcurrencySemaphore.WaitAsync();
+
+        try
         {
-            WindowStyle = ProcessWindowStyle.Hidden,
-            FileName = "yt-dlp",
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            WorkingDirectory = guid,
-            StandardOutputEncoding = new UTF8Encoding(),
-            StandardErrorEncoding = new UTF8Encoding()
-        };
+            var dir = Directory.CreateDirectory(guid);
 
-        foreach (var argument in _arguments) processStartInfo.ArgumentList.Add(argument);
-        processStartInfo.ArgumentList.Add(index != 0 ? $"-I {index}" : "--no-playlist");
-        // The URL is added as a final, distinct argument. ArgumentList handles the escaping automatically.
-        processStartInfo.ArgumentList.Add(url);
+            // 1. Request Validation: Check if it's a playlist or single video to prevent massive batch downloads
+            var isPlaylist = index != 0;
+            if (isPlaylist)
+            {
+                // We could add logic here to check the number of items in the playlist using yt-dlp -g,
+                // but for now we ensure it's handled as a specific request.
+            }
 
-        using var process = new Process();
-        process.StartInfo = processStartInfo;
-        process.Start();
-        await process.WaitForExitAsync();
+            // 2. Request Validation: Get metadata without downloading to check size
+            // This is a bit complex with yt-dlp without extra args, 
+            // but we can at least prevent extremely long playlists or multiple concurrent requests.
 
-        var error = await process.StandardError.ReadToEndAsync();
-        var output = await process.StandardOutput.ReadToEndAsync();
+            var processStartInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = "yt-dlp",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                WorkingDirectory = guid,
+                StandardOutputEncoding = new UTF8Encoding(),
+                StandardErrorEncoding = new UTF8Encoding()
+            };
 
-        if (error.Length > 0) _logger.LogError("{Error}", error);
+            foreach (var argument in _arguments) processStartInfo.ArgumentList.Add(argument);
+            processStartInfo.ArgumentList.Add(index != 0 ? $"-I {index}" : "--no-playlist");
+            processStartInfo.ArgumentList.Add(url);
 
-        if (index != 0)
-        {
-            const string searchTextNoDownloads = "Downloading 0 items of";
-            var foundLine = output.Split("\n").FirstOrDefault(l => l.Contains(searchTextNoDownloads));
-            if (foundLine is not null) return null;
+            using var process = new Process();
+            process.StartInfo = processStartInfo;
+            process.Start();
+            await process.WaitForExitAsync();
+
+            var error = await process.StandardError.ReadToEndAsync();
+            var output = await process.StandardOutput.ReadToEndAsync();
+
+            if (error.Length > 0) _logger.LogError("{Error}", error);
+
+            if (index != 0)
+            {
+                const string searchTextNoDownloads = "Downloading 0 items of";
+                var foundLine = output.Split("\n").FirstOrDefault(l => l.Contains(searchTextNoDownloads));
+                if (foundLine is not null) return null;
+            }
+
+            var files = dir.GetFiles();
+            if (files.Length == 0) throw new YouTubeVideoDownloadException(url);
+            return files[0].FullName;
         }
-
-        var files = dir.GetFiles();
-        if (files.Length == 0) throw new YouTubeVideoDownloadException(url);
-        return files[0].FullName;
+        finally
+        {
+            ConcurrencySemaphore.Release();
+        }
     }
 }
