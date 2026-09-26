@@ -1,12 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Text;
+using System.Text.RegularExpressions;
 using Backend.Service.Exception;
 
 namespace Backend.Service;
 
 public class DownloadService
 {
-    // Limit concurrency to 3 simultaneous downloads
+    private const long MaxFileSizeInBytes = 100 * 1024 * 1024; // 100 MB limit
     private static readonly SemaphoreSlim ConcurrencySemaphore = new(3);
 
     private readonly string[] _arguments =
@@ -40,17 +41,13 @@ public class DownloadService
         {
             var dir = Directory.CreateDirectory(guid);
 
-            // 1. Request Validation: Check if it's a playlist or single video to prevent massive batch downloads
-            var isPlaylist = index != 0;
-            if (isPlaylist)
+            // Request Validation: Check file size before downloading
+            var fileSize = await GetVideoFileSizeAsync(url);
+            if (fileSize is > MaxFileSizeInBytes)
             {
-                // We could add logic here to check the number of items in the playlist using yt-dlp -g,
-                // but for now we ensure it's handled as a specific request.
+                _logger.LogWarning("Download rejected: File size {Size} exceeds limit of {Limit}", fileSize, MaxFileSizeInBytes);
+                throw new YouTubeVideoDownloadException("File size exceeds the 500MB limit.");
             }
-
-            // 2. Request Validation: Get metadata without downloading to check size
-            // This is a bit complex with yt-dlp without extra args, 
-            // but we can at least prevent extremely long playlists or multiple concurrent requests.
 
             var processStartInfo = new ProcessStartInfo
             {
@@ -92,6 +89,47 @@ public class DownloadService
         finally
         {
             ConcurrencySemaphore.Release();
+        }
+    }
+
+    private async Task<long?> GetVideoFileSizeAsync(string url)
+    {
+        try
+        {
+            var processStartInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = "yt-dlp",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                StandardOutputEncoding = new UTF8Encoding(),
+                StandardErrorEncoding = new UTF8Encoding()
+            };
+
+            processStartInfo.ArgumentList.Add("--print");
+            processStartInfo.ArgumentList.Add("filesize");
+            processStartInfo.ArgumentList.Add("--format");
+            processStartInfo.ArgumentList.Add("bestaudio[ext=m4a]");
+            processStartInfo.ArgumentList.Add(url);
+
+            using var process = new Process();
+            process.StartInfo = processStartInfo;
+            process.Start();
+            var output = await process.StandardOutput.ReadToEndAsync();
+            await process.WaitForExitAsync();
+
+            if (string.IsNullOrWhiteSpace(output)) return null;
+
+            var matches = Regex.Match(output, @"(\d+)");
+            if (matches.Success && long.TryParse(matches.Groups[1].Value, out var size)) return size;
+
+            return null;
+        }
+        catch (System.Exception ex)
+        {
+            _logger.LogError("Error checking file size: {Msg}", ex.Message);
+            return null; // Fail-open for UX if metadata check fails
         }
     }
 }
