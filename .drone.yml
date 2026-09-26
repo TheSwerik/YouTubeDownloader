@@ -30,8 +30,8 @@ steps:
     settings:
       dockerfile: Backend/Dockerfile
       context: .
-      registry: registry.swerik.dev
-      repo: registry.swerik.dev/youtubedownloader/backend
+      registry: localhost:5000
+      repo: youtubedownloader/backend
       tags: latest
       username:
         from_secret: REGISTRY_USERNAME
@@ -45,8 +45,8 @@ steps:
     settings:
       dockerfile: Frontend/Dockerfile
       context: .
-      registry: registry.swerik.dev
-      repo: registry.swerik.dev/youtubedownloader/frontend
+      registry: localhost:5000
+      repo: youtubedownloader/frontend
       tags: latest
       username:
         from_secret: REGISTRY_USERNAME
