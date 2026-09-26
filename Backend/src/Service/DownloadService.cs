@@ -14,16 +14,16 @@ public class DownloadService
     {
         "--update",
 #if DEBUG
-        "--ffmpeg-location \"C:/Program Files/ffmpeg/bin\"",
+        "--ffmpeg-location", "\"C:/Program Files/ffmpeg/bin\"",
 #endif
-        "--parse-metadata \"%(uploader|)s:%(meta_artist)s\"",
+        "--parse-metadata", "\"%(uploader|)s:%(meta_artist)s\"",
         "--embed-metadata",
         "--embed-thumbnail",
         "--extract-audio",
-        "--format bestaudio[ext=m4a]",
-        "--audio-format m4a",
-        "--audio-quality 0",
-        $"-o \"%(title)s {Guid.NewGuid()}.%(ext)s\""
+        "--format", "bestaudio[ext=m4a]",
+        "--audio-format", "m4a",
+        "--audio-quality", "0",
+        "-o", $"\"%(title)s {Guid.NewGuid()}.%(ext)s\""
     };
 
     private readonly ILogger<DownloadService> _logger;
