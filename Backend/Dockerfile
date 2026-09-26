@@ -14,6 +14,7 @@ RUN apk add --no-cache curl \
   && apk add --no-cache ffmpeg \
   && apk add --no-cache icu-libs krb5-libs libgcc libintl libssl3 libstdc++ zlib \
   && apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python \
+  && apk add --no-cache deno \
   && curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp \
   && chmod a+rx /usr/local/bin/yt-dlp
 
