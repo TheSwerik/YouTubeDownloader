@@ -16,7 +16,7 @@ builder.Services.AddScoped(_ => new HttpClient
 {
     BaseAddress = new Uri(
         builder.HostEnvironment.IsEnvironment("Local")
-            ? "http://localhost:8080"
+            ? "http://localhost:5978"
             : builder.HostEnvironment.BaseAddress + "/api/"
     )
 });
