@@ -3,7 +3,7 @@ name: youtubedownloader
 services:
   backend:
     container_name: youtubedownloader-backend
-    image: localhost:5000/youtubedownloader/backend
+    image: registry.swerik.dev/youtubedownloader/backend
     networks:
       - default
     environment:
@@ -27,7 +27,7 @@ services:
         max-file: '10'
   frontend:
     container_name: youtubedownloader-frontend
-    image: localhost:5000/youtubedownloader/frontend
+    image: registry.swerik.dev/youtubedownloader/frontend
     depends_on: 
       - backend
     networks:
