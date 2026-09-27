@@ -46,8 +46,8 @@ steps:
     settings:
       dockerfile: Frontend/Dockerfile
       context: .
-      registry: registry.swerik.dev
-      repo: registry.swerik.dev/youtubedownloader/frontend
+      registry: registry:443
+      repo: registry:443/youtubedownloader/frontend
       tags: latest
       insecure: true
       username:
