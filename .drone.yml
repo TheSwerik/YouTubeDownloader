@@ -86,7 +86,14 @@ steps:
   - name: docker login & Deploy
     commands:
       - docker --config /home/drone/.docker login localhost:5000 -u $USERNAME -p $PASSWORD
-      - docker --config /home/drone/.docker compose up -d --pull always
+
+      - docker --config /home/drone/.docker pull localhost:5000/youtubedownloader/backend:latest
+      - docker --config /home/drone/.docker pull localhost:5000/youtubedownloader/frontend:latest
+
+      - docker tag localhost:5000/youtubedownloader/backend:latest registry:443/youtubedownloader/backend:latest
+      - docker tag localhost:5000/youtubedownloader/frontend:latest registry:443/youtubedownloader/frontend:latest
+
+      - docker --config /home/drone/.docker compose up -d --pull never
     environment:
       USERNAME:
         from_secret: REGISTRY_USERNAME
